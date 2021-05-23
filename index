@@ -1,0 +1,112 @@
+
+//source: https://youtu.be/53pUZ0z1FhM
+//https://github.com/AlexzanderFlores/Worn-Off-Keys-Discord-Js
+
+const Discord = require('discord.js')
+//const client = new Discord.Client()
+const config = require('./config.json')
+const command = require('./command.js')
+const Commando = require('discord.js-commando')
+const path = require('path')
+const client = new Commando.CommandoClient({
+    owner: '523486356933181470',
+    commandPrefix: config.prefix
+})
+
+client.on('ready', () => {
+    console.log('Bot is on ready')
+
+
+client.registry
+.registerGroups([
+    ['misc', 'misc commands'],
+    ['moderation', 'moderation commands'],
+])
+.registerDefaults()
+.registerCommandsIn(path.join(__dirname, 'cmds'))
+
+client 
+    //ping
+    command(client, 'tobi', (message) => {
+        message.channel.send(`
+        My information.
+**name**    : "tob",
+**version** : "1.5.0",
+!More information dm" @Tobie#2144 "
+        `)
+
+    })
+
+
+    command(client, 'version', (message) => {
+        const embed = new Discord.MessageEmbed()
+            .setTitle('TOBI')
+            .setDescription('Version : 1.5 update 5/19/2021')
+            .setTimestamp()
+            .setAuthor('t0bie_official')
+        message.channel.send(embed)
+    })
+    command(client, 'web', (message) => {
+        const embed = new Discord.MessageEmbed()
+        .setTitle('URL.text')
+    
+    })
+    
+    //set bor status
+    command(client, 'status', (message) => {
+        const content = message.content.replace('/status', '')
+        client.user.setPresence({
+            activity: {
+                name: content,
+                type: 0,
+            }
+        })
+    })
+    command(client, 'help', (message) => {
+        message.channel.send(`
+Here was my command pls follow ths command.
+**/Notice**      : for wake tob up!
+**/contact**     : Contact personal
+**/Hi**          : for say Hi to sb.
+**/Embed**       : for set embed text
+**/Poll**        : for create poll
+**/Music**       : Play music
+**/help**        :  for helping command
+and also you forget my prefix was "/"
+`)
+    })
+
+    command(client, 'rule', (message) => {
+        message.channel.send(`
+Welcome to เรือโจรสลัด Server       
+**Rules:**
+1. No spamming, advertising, or illegal activity.
+2. Do not toxic on chat.
+3. Do not Skip the music.
+4. When asking questions about Sci-Math.
+6. Do not ping people out because we are stay in night-mode.
+7. Do not Feed the animal.
+8. Do not follow this Rule have fun !!
+        `)
+    })
+    command(client, 'how', (message) => {
+        message.channel.send(`
+Here was my average.
+**Chat** : when you feel alone
+**Talk** : when you feel alone in channel
+`)
+        })
+    })
+    command(client, 'contact', (message) => {
+        message.channel.send(`
+Contact : TOB
+**Mail**        : psuwit.narongkron.nk@gmail.com
+**Facebook**    : Narongkorn kitrungrot
+**Instragram**  : t0bie_official
+**Line**        : marongkron3068
+**Dicord**      : @Tobie#2144
+**Call**        : +66 928945455
+`)
+    })
+
+client.login(config.token)
