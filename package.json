@@ -1,0 +1,31 @@
+{
+  "name": "tob",
+  "version": "1.0.0",
+  "description": "So this is my new own version discord bot name \"tobi\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tobie",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "github:discordjs/opus",
+    "axios": "^0.21.1",
+    "chart.js": "^3.4.1",
+    "chartjs-node-canvas": "^3.2.0",
+    "dayjs": "^1.10.6",
+    "discord-player": "^4.1.4",
+    "discord-ytdl-core": "^5.0.4",
+    "discord.js": "^12.5.3",
+    "discord.js-commando": "git+https://github.com/discordjs/Commando.git",
+    "distube": "^2.8.13",
+    "ffmpeg-static": "^4.4.0",
+    "install": "^0.13.0",
+    "merge-options": "^3.0.4",
+    "node-fetch": "^2.6.1",
+    "spotify-url-info": "^2.2.3",
+    "ytdl-core": "^4.8.3",
+    "ytpl": "^2.2.1",
+    "ytsr": "^3.5.0"
+  }
+}
