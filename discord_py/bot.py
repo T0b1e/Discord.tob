@@ -1,13 +1,18 @@
 import discord
+from discord import channel
+from discord.client import Client
 from discord.embeds import Embed
 from discord.ext import commands
+from discord.ext.commands import bot
 from discord.player import FFmpegPCMAudio
 from discord.utils import get
 import youtube_dl #play url
 import os #play os
+import calendar
 import datetime #set time
 import asyncio #gacha
 import random #gacha prize
+import math
 import json #json
 
 client = commands.Bot(command_prefix= '=')
@@ -35,31 +40,36 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready(): 
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('/help'))
-    print('Bot is now ready')
+    print(f'{client.user.name} is online')
 
 @client.command() #list commands
 async def list(ctx):
     embed = discord.Embed(title = "List commands", description = "Use '=list'",color = ctx.author.color)
-    embed.add_field(name = "Json",value=
-    "TOBI but in json file"
+    embed.add_field(name = "Basic",value=
+    "TOBI but in json file\n"
     "**Network**        for Check TOBI Network (.ms)\n"
     "**userinfo**       for Check user information (Join server, Role)\n"
     "**gacha _ _**      for random number from fisrt to second\n"
     "**prize _ _**      for Give away prize from Admin by set time and prize\n"
     "**poll**           for vote Good or Bad (No limit user)\n"
     "**spawn**          for spawn TOBI to channel\n")
+    embed.add_field(name= "Report",value=
+    "**report**         for report User by Issue to Admin to discuss and Vote\n")
     embed.add_field(name= "Math",value=
     "**plus _ _**       for plus the numbers\n"
     "**minus _ _**      for minus the numbers\n"
     "**multiplie _ _**  for multiplie the numbers\n"
-    "**divide __**     for divide the numbers\n")
+    "**divide __**      for divide the numbers\n"
+    "**sqrt __**        for Square root the numbers\n"
+    "**expo __**        for exponent the numbers\n"
+    "**Q = mcΔt**       for calculate the numbers\n")
     embed.add_field(name= "Audio",value=
     "**play 'url'**     for play song\n"
     "**stop**           for stop song\n"
     "**pause**          for pause song\n"
     "**resume**         for resume song\n" )
     embed.add_field(name= "ADMIN",value=
-    "only Admin or mod can acess this permission"
+    "only Admin or mod can acess this permission\n"
     "**mute @___**      for muted someone\n"
     "**unmute @___**    for unmuted someone\n"
     "**kick @___**      for kick someone from the server\n"
@@ -115,12 +125,34 @@ async def multiplie(ctx,a: float,b: float):
 async def divide(ctx,a: float,b: float):
     await ctx.send(a / b)
 
-@client.command() # multiplie _ _
-async def test(ctx,a: float):
-    if a > 100:
-        await ctx.send("pass")
-    else:
-        await ctx.send("Try again")
+@client.command() # sqrt
+async def sqrt(ctx,a: float):
+        await ctx.send(math.sqrt(a))
+
+@client.command() # sqrt
+async def expo(ctx,a: int,b: int):
+        await ctx.send(a**b)
+
+@client.command() #Q = mcΔt
+async def Q(ctx,m: float,c: float,t1: float,t2: float):
+        await ctx.send(m*c*(t2-t1))
+
+@client.command() #report requested
+async def report(ctx, member:discord.Member, message,a :int):
+    channel = client.get_channel(873049329449963530)
+    em1 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.red())
+    em2 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.orange())
+    em3 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.green())
+    em4 = discord.Embed(title = "I got Report requested", description =f"About issue made by {member} with {message}: level of problem {a}",color = discord.Color.blue())
+    #Level a > 5 zone: red , a 4-5
+    if(a > 6): # 6-  
+        await ctx.send(embed = em1)
+    if(a > 3 and a <= 6): # 4-5
+        await ctx.send(embed = em2)
+    if(a <= 3): # -3
+        await ctx.send(embed = em3)
+    await channel.send(embed = em4)
+    #if report requested is more than 10 people and User vote is for vote for problem.
 
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
@@ -215,6 +247,10 @@ async def git(ctx):
     em = discord.Embed(title = "Github repo", description = "Use '=git'",color = ctx.author.color)
     em.add_field(name = "Github",value="https://github.com/T0b1e/Discord.tob.git")
     await ctx.send(embed = em)
+
+@client.command() # Knock Knock
+async def knock(ctx,knock:str):
+    await ctx.send("who r u?")
 
 @client.command() #poll
 async def poll(ctx,*,message):
