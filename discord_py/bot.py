@@ -1,20 +1,27 @@
+from re import split
 import discord
-from discord import channel
-from discord.client import Client
-from discord.embeds import Embed
 from discord.ext import commands
-from discord.ext.commands import bot
+
 from discord.player import FFmpegPCMAudio
 from discord.utils import get
+import asyncio #gacha
 import youtube_dl #play url
 import os #play os
-import calendar
-import datetime #set time
-import asyncio #gacha
+
+from datetime import datetime
+#import datetime #set time
+import time #Class,Count
+#from time import sleep
+import calendar #Class
+
 import random #gacha prize
 import math
-import json #json
 
+import webbrowser
+import json
+import json
+
+os.chdir(r'C:\Users\asus\Desktop\Udemy\discord_py')
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
 
@@ -52,7 +59,9 @@ async def list(ctx):
     "**gacha _ _**      for random number from fisrt to second\n"
     "**prize _ _**      for Give away prize from Admin by set time and prize\n"
     "**poll**           for vote Good or Bad (No limit user)\n"
-    "**spawn**          for spawn TOBI to channel\n")
+    "**spawn**          for spawn TOBI to channel\n"
+    "**bomb**           for delete message in channel\n"
+    "**attack**          for attack someone by disconnect,move member\n")
     embed.add_field(name= "Report",value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
     embed.add_field(name= "Math",value=
@@ -75,7 +84,9 @@ async def list(ctx):
     "**kick @___**      for kick someone from the server\n"
     "**ban @___**       for ban someone from the server\n"
     "**banvote**        for ban Someone but use Vote from Admin\n"
-    "**kickvote**       for kick Someone but use Vote from Admin\n")
+    "**mutevote**       for mute Someone but use Vote from Admin\n"
+    "**kickvote**       for kick Someone but use Vote from Admin\n"
+    "**vote**           for vote member when Vote was started\n")
     embed.add_field(name= "Tobi",value=
     "**tobiinfo**       for TOBI information\n"
     "**git**            for GitHub\n"
@@ -90,10 +101,49 @@ async def Network(ctx): #Network
 @client.event
 async def on_member_join(member): # join
     print(f'{member} has joined the server.')
+    """with open('users.json', 'r') as f:
+        users = json.load(f)
+
+    await update_data(users, member)
+
+    with open('users.json', 'w') as f:
+        json.dump(users, f)"""
 
 @client.event
 async def on_member_remove(member): # remove
     print(f'{member} has removed the server.')
+
+"""client.event
+async def on_message(message):
+    with open('users.json','r') as f:
+        users = json.load(f)
+
+    await update_data(users, message.author)
+    await add_experience(users,  message.author, 5)
+    await level_up(users,  message.author, message.channel)
+
+    with open('level.json','w') as f:
+        json.dump(users, f)
+
+async def update_data(users, user):
+    if not user.id in users:
+        users[user.id] = {}
+        users[user.id]["experience"] = 0
+        users[user.id]["level"] = 1
+
+async def add_experience(users, user, exp):
+        users[user.id]["experience"] += exp
+
+async def level_up(users, user, channel):
+        experience = users[user.id]["experience"]
+        level_start = users[user.id]['level']
+        level_End = int(experience ** 1/4)
+
+        if level_start < level_End:
+            await client.send_message(channel, '{} has leveled up to {} '.format(user.mention,level_End))
+            await client.send_message('Congratulation Mr.{user.mention}')
+            users[user.id]["level"] = level_End"""
+
 
 @client.command() #userinfo
 async def userinfo(ctx, member:discord.Member):
@@ -137,9 +187,46 @@ async def expo(ctx,a: int,b: int):
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
 
+@client.command()
+async def attack(ctx, member:discord.Member):
+    
+    skill = ["mute","ban","bomb"]
+    finalskill = random.choice(skill)
+    if finalskill == "mute":
+        mute()
+        await ctx.send("mute")
+    elif finalskill == "ban":
+        ban()
+        await ctx.send("ban")
+    else:
+         await ctx.send("U Miss lol")
+    #await ctx.send(finalskill)
+    #await ctx.send(f'attacked {member.mention} by {skill} ')
+
+
+@client.command() #clear message count command text
+async def bomb(ctx,Time:int):#
+    while Time > 0:
+        m, s = divmod(Time,60)
+        h, m = divmod(m, 60)
+        timeleft = str(h).zfill(2) + ":" + str(m).zfill(2) + ":" + str(s).zfill(2)
+        await ctx.send(timeleft)#+ "\r", end=""
+        time.sleep(1)
+        Time -= 1
+        text = 10 + int(s)
+        if(timeleft == "00:00:01"):
+            await ctx.channel.purge(limit=text)#channel.purge(limit=amount)
+
+@client.command() #disconnect user
+async def shoot(ctx,member:discord.Member):
+    if member.is_connected():
+        await member.disconnect()
+    else:
+        await ctx.send("This guys not in channel")
+
 @client.command() #report requested
 async def report(ctx, member:discord.Member, message,a :int):
-    channel = client.get_channel(873049329449963530)
+    channel = client.get_channel(873029322288558150)
     em1 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.red())
     em2 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.orange())
     em3 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.green())
@@ -255,10 +342,31 @@ async def knock(ctx,knock:str):
 @client.command() #poll
 async def poll(ctx,*,message):
     em = discord.Embed(title = "Vote", description = f"{message}",color = ctx.author.color)
-    em.add_field(name = "Democracy",value="for justice")
+    em.add_field(name = "Poll",value="I vote bote of them so it will count 1 first")
     msg = await ctx.channel.send(embed=em)
     await msg.add_reaction('👍')
     await msg.add_reaction('👎')
+    x = len(message.reactions)
+    print(x)
+    
+@client.command() #Vote for ban
+async def mutevote(ctx, member :discord.Member):
+    Yes =   '👍'
+    No =    '👎'
+    embed = discord.Embed(title = f"Vote for mute {member} ", description = f"If vote has like more than 10 TOBI will mute {member} forever",color = ctx.author.color)
+    msg = await ctx.channel.send(embed=embed)
+    await msg.add_reaction('👍')
+    await msg.add_reaction('👎')
+    if Yes > 10:
+        await member.ban
+    if No > Yes:
+        await ctx.send("You're free now")
+
+@client.command() #Vote
+async def vote(ctx, member :discord.Member):
+    await ctx.send(f"Recieve Vote {member}")
+    time.sleep(10)
+    await ctx.channel.purge(limit=2)
 
 @client.command() #Vote for ban
 async def banvote(ctx, member :discord.Member,message):
@@ -294,6 +402,17 @@ async def gacha(ctx, num1:int ,num2:int):
     embed = discord.Embed(title = "Gacha", description = (random.randint(num1,num2)),color = ctx.author.color)
     await ctx.send(embed = embed)
 
+@client.command() #Special command
+async def gacha_group(ctx):
+    person = ["Tob","Petch","Spy","PP","John","Paul","Pooh"]
+    x = 0
+    for x in range (10):
+        lucky = random.choice(person)
+    #final = len(lucky) > person/2
+    #final = split(lucky)
+    await ctx.send(f'lucky person is {lucky}')
+    #print(lucky)
+
 @client.command(pass_context = True) #spawn
 async def spawn(ctx):
     if(ctx.author.voice):
@@ -311,6 +430,78 @@ async def lofi(ctx):
         player = voice.play(source)
     else:
         await ctx.send("you're not in the voice channel")
+
+#Chem Bio Phy Math Maths Math+ Socio His Thai Eng Empty Tcas Ondemand Gym
+subjects = {'monday' : ['Chem', 'Bio', 'Empty','LUNCH BREAK', 'Tcas', 'Ondemand'],
+                'tuesday'   : ['Math', 'Socio', 'Chem', 'LUNCH BREAK', 'Empty', 'Ondemand', 'Ondemand'],
+                'wednesday' : ['Phy', 'Thai', 'Math', 'LUNCH BREAK', 'Tcas', 'Tcas', 'Ondemand'],
+                'thursday'  : ['Phy', 'Self', 'Eng', 'LUNCH BREAK', 'Empty', 'Empty', 'Empty'],
+                'friday'    : ['Thai', 'Math+', 'Gym', 'LUNCH BREAK', 'Tcas', 'Tcas', 'Ondemand'],
+                'saturday'  : ['DMAA', 'WT', 'UNIX','LUNCH BREAK', 'UNIXLAB'],
+                'sunday'    : ['WTLAB', 'AELSLAB', 'LUNCH BREAK', 'MPMCLAB']
+              }
+classes = { 'Math'  :'https://meet.google.com/lookup/hhl5nljook',
+            'Maths' :'https://meet.google.com/lookup/bpik46rztn',
+            'Math+' :'https://meet.google.com/lookup/g5qwwqesrs',
+            'Chem'  :'https://meet.google.com/lookup/hwfinof46t',
+            'Bio'   :'https://meet.google.com/lookup/cvo55c4gjg',	
+            'Phy'   :'https://meet.google.com/lookup/gbt4qisch5',
+            'Socio' :'https://meet.google.com/lookup/ee4tcdlr5p',
+            'His'   :'https://meet.google.com/lookup/d4mjsb2wns',
+            'Thai'  :'https://meet.google.com/lookup/dn2mskilxk',
+            'Eng'	:'https://meet.google.com/lookup/bbyjq2x26m',
+            'Tcas'  :'https://meet.google.com/lookup/dkp3a7nz5p',
+            'Ondemand' :'https://meet.google.com/lookup/dkp3a7nz5p',
+            'Gym'   :'https://meet.google.com/lookup/gat4hm4b4z',
+            'Empty' :''
+          }
+
+def find_day():
+    date_and_time = datetime.now()
+    date = str(date_and_time.day) + ' ' + str(date_and_time.month) + ' ' + str(date_and_time.year)
+    date = datetime.strptime(date, '%d %m %Y').weekday()
+    day = calendar.day_name[date]
+    return day.lower()
+
+@client.command() #auto class
+async def classtoday(ctx):
+    print()
+    classes_today()
+    
+def classes_today():
+    subs = find_classes()
+    for i in subs:
+        time = datetime.now().time()
+        time = str(time).split(":")
+        if time[0] == i[0:2] and time[1] >= i[3:5]:
+            print('\n' + '\t' + i,' <-- Present Session')
+        elif time[0] == i[11:13] and time[1] < i[14:16]:
+            print('\n' + '\t' + i,' <-- Present Session')
+        else:
+            print('\n' + '\t' + i)
+
+def find_classes():
+    subs = []
+    day = find_day()
+    classes = subjects[day]
+    if day != 'saturday' and day != 'sunday':
+        timings = ['09:15 am - 10:15 am','10:30 am - 11:30 am', '11:45 am - 12:45 pm', '12:45 pm - 14:00 pm', '14:00 pm - 15:00 pm', '15:15 pm - 16:15 pm', '16:30 pm - 17:30 pm']
+        for i in range(7):
+            formatted = '{} {}'.format(timings[i],classes[i])
+            subs.append(formatted)
+    if day == 'saturday':
+        timings = ['09:15 am - 10:15 am','10:30 am - 11:30 am', '11:45 am - 12:45 pm', '12:45 pm - 14:00 pm', '14:00 pm - 17:30 pm']
+        for i in range(5):
+            formatted = '{} {}'.format(timings[i],classes[i])
+            subs.append(formatted)
+    if day == 'sunday':
+        timings = ['07:30 am - 10:30 am', '10:45 am - 13:45 pm', '14:15 pm', '14:15 pm - 17:15 pm']
+        for i in range(4):
+            formatted = '{} {}'.format(timings[i],classes[i])
+            subs.append(formatted)
+    return subs
+
+
 
 @client.command() #play
 async def play(ctx, url : str):
