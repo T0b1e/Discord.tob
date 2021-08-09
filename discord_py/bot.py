@@ -193,10 +193,10 @@ async def attack(ctx, member:discord.Member):
     finalskill = random.choice(skill)
     if finalskill == "mute":
         mute()
-        await ctx.send("mute")
+        await ctx.send("muted commnad")
     elif finalskill == "ban":
         ban()
-        await ctx.send("ban")
+        await ctx.send("ban commnad")
     else:
          await ctx.send("U Miss lol")
     #await ctx.send(finalskill)
@@ -205,6 +205,7 @@ async def attack(ctx, member:discord.Member):
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time:int):#
+    x = Time
     while Time > 0:
         m, s = divmod(Time,60)
         h, m = divmod(m, 60)
@@ -214,7 +215,7 @@ async def bomb(ctx,Time:int):#
         Time -= 1
         text = 10 + int(s)
         if(timeleft == "00:00:01"):
-            await ctx.channel.purge(limit=text)#channel.purge(limit=amount)
+            await ctx.channel.purge(limit=(x + 1)*2)#channel.purge(limit=amount)
 
 @client.command() #disconnect user
 async def shoot(ctx,member:discord.Member):
