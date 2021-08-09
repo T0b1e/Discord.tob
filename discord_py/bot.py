@@ -241,6 +241,8 @@ async def report(ctx, member:discord.Member, message,a :int):
     await channel.send(embed = em4)
     #if report requested is more than 10 people and User vote is for vote for problem.
 
+#def reportrequest():
+    
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
     await member.kick(reason=reason)
@@ -564,4 +566,4 @@ async def stop(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
     #await ctx.send("**stop**") 
-client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.6yR2YXO4fI3HoLdYTeC18J8NYE8')
+client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.Axnumc5yx12oUhMqZQJGAoXM5eo')
