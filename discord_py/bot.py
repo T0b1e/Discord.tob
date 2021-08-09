@@ -19,9 +19,8 @@ import math
 
 import webbrowser
 import json
-import json
 
-os.chdir(r'C:\Users\asus\Desktop\Udemy\discord_py')
+os.chdir(r'C:\Users\asus\Desktop\Udemy\discordbot\Discord.tob\discord_py')
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
 
@@ -101,19 +100,19 @@ async def Network(ctx): #Network
 @client.event
 async def on_member_join(member): # join
     print(f'{member} has joined the server.')
-    """with open('users.json', 'r') as f:
+    with open('users.json', 'r') as f:
         users = json.load(f)
 
     await update_data(users, member)
 
     with open('users.json', 'w') as f:
-        json.dump(users, f)"""
+        json.dump(users, f)
 
 @client.event
 async def on_member_remove(member): # remove
     print(f'{member} has removed the server.')
 
-"""client.event
+client.event
 async def on_message(message):
     with open('users.json','r') as f:
         users = json.load(f)
@@ -122,7 +121,7 @@ async def on_message(message):
     await add_experience(users,  message.author, 5)
     await level_up(users,  message.author, message.channel)
 
-    with open('level.json','w') as f:
+    with open('users.json','w') as f:
         json.dump(users, f)
 
 async def update_data(users, user):
@@ -142,7 +141,7 @@ async def level_up(users, user, channel):
         if level_start < level_End:
             await client.send_message(channel, '{} has leveled up to {} '.format(user.mention,level_End))
             await client.send_message('Congratulation Mr.{user.mention}')
-            users[user.id]["level"] = level_End"""
+            users[user.id]["level"] = level_End
 
 
 @client.command() #userinfo
@@ -239,6 +238,11 @@ async def report(ctx, member:discord.Member, message,a :int):
     if(a <= 3): # -3
         await ctx.send(embed = em3)
     await channel.send(embed = em4)
+
+    """with open('users.json','r') as f:
+        users = json.load(f)
+    
+    await update_data(users, message.author)"""
     #if report requested is more than 10 people and User vote is for vote for problem.
 
 #def reportrequest():
