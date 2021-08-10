@@ -187,6 +187,10 @@ async def sqrt(ctx,a: float):
 async def expo(ctx,a: int,b: int):
         await ctx.send(a**b)
 
+@client.command() # factorial
+async def fac(ctx,a: int):
+        await ctx.send(math.factorial(a))
+
 @client.command() #Q = mcΔt
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))

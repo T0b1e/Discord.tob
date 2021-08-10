@@ -1,2 +1,1 @@
-
-    await ctx.send(s)
+Discord.tob\discord_py
