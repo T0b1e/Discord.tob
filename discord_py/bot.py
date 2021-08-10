@@ -46,6 +46,8 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready(): 
+    channel = client.get_channel(843680768835190796)
+    await channel.send('TOBI is on ready, Type "=list" to start')
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('/help'))
     print(f'{client.user.name} is online')
 
