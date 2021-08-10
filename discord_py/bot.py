@@ -1,4 +1,4 @@
-from re import split
+from re import S, split
 import discord
 from discord.ext import commands
 
@@ -19,6 +19,7 @@ import math
 
 import webbrowser
 import json
+
 
 os.chdir(r'C:\Users\asus\Desktop\Udemy\discordbot\Discord.tob\discord_py')
 client = commands.Bot(command_prefix= '=')
@@ -99,6 +100,8 @@ async def Network(ctx): #Network
 
 @client.event
 async def on_member_join(member): # join
+    role = discord.utils.get(member.server.roles,name = 'USERS')
+    await client.add_roles(member, role)
     print(f'{member} has joined the server.')
     with open('users.json', 'r') as f:
         users = json.load(f)
@@ -239,8 +242,11 @@ async def report(ctx, member:discord.Member, message,a :int):
     if(a <= 3): # -3
         await ctx.send(embed = em3)
     await channel.send(embed = em4)
+"""    with open('report.json') as f:
+        s = f.read()
+    print(S)"""
 
-    """with open('users.json','r') as f:
+"""with open('users.json','r') as f:
         users = json.load(f)
     
     await update_data(users, message.author)"""
