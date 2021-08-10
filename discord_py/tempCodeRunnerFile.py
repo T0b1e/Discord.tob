@@ -1,0 +1,2 @@
+
+    await ctx.send(s)

@@ -253,7 +253,11 @@ async def report(ctx, member:discord.Member, message,a :int):
     #if report requested is more than 10 people and User vote is for vote for problem.
 
 #def reportrequest():
-    
+@client.command()
+async def jsons(ctx):
+    with open('report.json') as f:
+        await ctx.send("pass")
+
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
     await member.kick(reason=reason)
