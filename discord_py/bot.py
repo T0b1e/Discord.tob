@@ -196,6 +196,12 @@ async def fac(ctx,a: int):
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
 
+@client.command() #Q = mcΔt
+async def typeof(ctx,message):
+        x = typeof(message)
+        await ctx.send(x)
+
+
 @client.command()
 async def attack(ctx, member:discord.Member):
     
