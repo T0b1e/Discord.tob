@@ -21,7 +21,7 @@ import webbrowser
 import json
 
 
-os.chdir(r'C:\Users\asus\Desktop\Udemy\discordbot\Discord.tob\discord_py')
+os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py')
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
 
