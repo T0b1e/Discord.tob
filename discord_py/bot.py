@@ -73,6 +73,7 @@ async def list(ctx):
     "**divide __**      for divide the numbers\n"
     "**sqrt __**        for Square root the numbers\n"
     "**expo __**        for exponent the numbers\n"
+    "**fac __**        for factorial the numbers\n"
     "**Q = mcΔt**       for calculate the numbers\n")
     embed.add_field(name= "Audio",value=
     "**play 'url'**     for play song\n"
