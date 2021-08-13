@@ -1,6 +1,6 @@
 from re import S, split
 import discord
-from discord.ext import commands
+from discord.ext import commands,tasks
 
 from discord.player import FFmpegPCMAudio
 from discord.utils import get
@@ -159,6 +159,11 @@ async def userinfo(ctx, member:discord.Member):
     embed.add_field(name="Joined Server",value= member.joined_at.strftime('%d.%m.%y and %H hr.:%M m'))
     embed.add_field(name=f"Role({len(roles)})" ,value=" ".join([role.mention for role in roles]))
     await ctx.send(embed=embed)
+
+@tasks.loop(seconds=2)
+async def change_status():
+    channel = client.get_channel(875074992902131772)
+    await channel.send('here')
 
 @client.command() # ping pong
 async def ping(ctx):
