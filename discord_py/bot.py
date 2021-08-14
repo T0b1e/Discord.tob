@@ -9,6 +9,7 @@ import youtube_dl #play url
 import os #play os
 
 from datetime import datetime
+import datetime as dt
 #import datetime #set time
 import time #Class,Count
 #from time import sleep
@@ -467,76 +468,15 @@ async def lofi(ctx):
         await ctx.send("you're not in the voice channel")
 
 #Chem Bio Phy Math Maths Math+ Socio His Thai Eng Empty Tcas Ondemand Gym
-subjects = {'monday' : ['Chem', 'Bio', 'Empty','LUNCH BREAK', 'Tcas', 'Ondemand'],
-                'tuesday'   : ['Math', 'Socio', 'Chem', 'LUNCH BREAK', 'Empty', 'Ondemand', 'Ondemand'],
-                'wednesday' : ['Phy', 'Thai', 'Math', 'LUNCH BREAK', 'Tcas', 'Tcas', 'Ondemand'],
-                'thursday'  : ['Phy', 'Self', 'Eng', 'LUNCH BREAK', 'Empty', 'Empty', 'Empty'],
-                'friday'    : ['Thai', 'Math+', 'Gym', 'LUNCH BREAK', 'Tcas', 'Tcas', 'Ondemand'],
-                'saturday'  : ['DMAA', 'WT', 'UNIX','LUNCH BREAK', 'UNIXLAB'],
-                'sunday'    : ['WTLAB', 'AELSLAB', 'LUNCH BREAK', 'MPMCLAB']
-              }
-classes = { 'Math'  :'https://meet.google.com/lookup/hhl5nljook',
-            'Maths' :'https://meet.google.com/lookup/bpik46rztn',
-            'Math+' :'https://meet.google.com/lookup/g5qwwqesrs',
-            'Chem'  :'https://meet.google.com/lookup/hwfinof46t',
-            'Bio'   :'https://meet.google.com/lookup/cvo55c4gjg',	
-            'Phy'   :'https://meet.google.com/lookup/gbt4qisch5',
-            'Socio' :'https://meet.google.com/lookup/ee4tcdlr5p',
-            'His'   :'https://meet.google.com/lookup/d4mjsb2wns',
-            'Thai'  :'https://meet.google.com/lookup/dn2mskilxk',
-            'Eng'	:'https://meet.google.com/lookup/bbyjq2x26m',
-            'Tcas'  :'https://meet.google.com/lookup/dkp3a7nz5p',
-            'Ondemand' :'https://meet.google.com/lookup/dkp3a7nz5p',
-            'Gym'   :'https://meet.google.com/lookup/gat4hm4b4z',
-            'Empty' :''
-          }
-
-def find_day():
-    date_and_time = datetime.now()
-    date = str(date_and_time.day) + ' ' + str(date_and_time.month) + ' ' + str(date_and_time.year)
-    date = datetime.strptime(date, '%d %m %Y').weekday()
-    day = calendar.day_name[date]
-    return day.lower()
-
-@client.command() #auto class
-async def classtoday(ctx):
-    print()
-    classes_today()
-    
-def classes_today():
-    subs = find_classes()
-    for i in subs:
-        time = datetime.now().time()
-        time = str(time).split(":")
-        if time[0] == i[0:2] and time[1] >= i[3:5]:
-            print('\n' + '\t' + i,' <-- Present Session')
-        elif time[0] == i[11:13] and time[1] < i[14:16]:
-            print('\n' + '\t' + i,' <-- Present Session')
-        else:
-            print('\n' + '\t' + i)
-
-def find_classes():
-    subs = []
-    day = find_day()
-    classes = subjects[day]
-    if day != 'saturday' and day != 'sunday':
-        timings = ['09:15 am - 10:15 am','10:30 am - 11:30 am', '11:45 am - 12:45 pm', '12:45 pm - 14:00 pm', '14:00 pm - 15:00 pm', '15:15 pm - 16:15 pm', '16:30 pm - 17:30 pm']
-        for i in range(7):
-            formatted = '{} {}'.format(timings[i],classes[i])
-            subs.append(formatted)
-    if day == 'saturday':
-        timings = ['09:15 am - 10:15 am','10:30 am - 11:30 am', '11:45 am - 12:45 pm', '12:45 pm - 14:00 pm', '14:00 pm - 17:30 pm']
-        for i in range(5):
-            formatted = '{} {}'.format(timings[i],classes[i])
-            subs.append(formatted)
-    if day == 'sunday':
-        timings = ['07:30 am - 10:30 am', '10:45 am - 13:45 pm', '14:15 pm', '14:15 pm - 17:15 pm']
-        for i in range(4):
-            formatted = '{} {}'.format(timings[i],classes[i])
-            subs.append(formatted)
-    return subs
-
-
+@client.command() #join
+async def time(ctx):
+    Now = dt.datetime.now()
+    day = Now.strftime('%A')
+    hour = Now.strftime('%H')
+    minutes = Now.strftime('%M')
+    seconds = Now.strftime('%S')
+    today = day,hour,minutes,seconds
+    await ctx.send(today)
 
 @client.command() #play
 async def play(ctx, url : str):
