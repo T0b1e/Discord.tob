@@ -49,7 +49,11 @@ for filename in os.listdir('./cogs'):
 async def on_ready(): 
     channel = client.get_channel(843680768835190796)
     await channel.send('TOBI is on ready, Type "=list" to start')
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game('/help'))
+    now = dt.datetime.now()
+    birthday = dt.datetime(year=2022, month=1, day=12,)
+    count = birthday - now
+    #print(count)
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))
     print(f'{client.user.name} is online')
 
 @client.command() #list commands
