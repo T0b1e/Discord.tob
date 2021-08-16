@@ -1,4 +1,3 @@
-from re import S, split
 import discord
 from discord.ext import commands,tasks
 
@@ -543,4 +542,4 @@ async def stop(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
     #await ctx.send("**stop**") 
-client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.Axnumc5yx12oUhMqZQJGAoXM5eo')
+client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.e0I1pWWRE3rUZwka7C8jPayiHgA')
