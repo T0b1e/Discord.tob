@@ -20,8 +20,9 @@ import math
 import webbrowser
 import json
 
+from discord_components.client import DiscordComponents
 
-os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py')
+os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py') #BUG
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
 
@@ -48,12 +49,13 @@ for filename in os.listdir('./cogs'):
 async def on_ready(): 
     channel = client.get_channel(843680768835190796)
     await channel.send('TOBI is on ready, Type "=list" to start')
-    now = dt.datetime.now()
+    """now = dt.datetime.now()
     birthday = dt.datetime(year=2022, month=1, day=12,)
     count = birthday - now
-    #print(count)
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))"""
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help'))
     print(f'{client.user.name} is online')
+    DiscordComponents(client)
 
 @client.command() #list commands
 async def list(ctx):
@@ -105,15 +107,15 @@ async def Network(ctx): #Network
     latency = round(client.latency * 1000, 1)
     await ctx.send(f"Network = {latency}ms")
 
-@client.event
+@client.event 
 async def on_member_join(member): # join
     role = discord.utils.get(member.server.roles,name = 'USERS')
     await client.add_roles(member, role)
-    print(f'{member} has joined the server.')
+    print(f'{member} has joined the server.') #TODO
     with open('users.json', 'r') as f:
         users = json.load(f)
 
-    await update_data(users, member)
+    await update_data(users, member) 
 
     with open('users.json', 'w') as f:
         json.dump(users, f)
@@ -396,10 +398,7 @@ async def mutevote(ctx, member :discord.Member):
     msg = await ctx.channel.send(embed=embed)
     await msg.add_reaction('👍')
     await msg.add_reaction('👎')
-    if Yes > 10:
-        await member.ban
-    if No > Yes:
-        await ctx.send("You're free now")
+    print(len(Yes)) #BUG
 
 @client.command() #Vote
 async def vote(ctx, member :discord.Member):
