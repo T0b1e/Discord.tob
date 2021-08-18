@@ -46,19 +46,19 @@ for filename in os.listdir('./cogs'):
 
 
 @client.event
-async def on_ready(): 
-    channel = client.get_channel(843680768835190796)
+async def on_ready(): #Event client ready
+    channel = client.get_channel(843680768835190796) #Get channel id
     await channel.send('TOBI is on ready, Type "=list" to start')
     """now = dt.datetime.now()
     birthday = dt.datetime(year=2022, month=1, day=12,)
     count = birthday - now
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))"""
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help'))
-    print(f'{client.user.name} is online')
-    DiscordComponents(client)
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help')) #Change status to =help
+    print(f'{client.user.name} is online') #Print TOBI is online
+    DiscordComponents(client) #Get lib name discord component
 
 @client.command() #list commands
-async def list(ctx):
+async def list(ctx): #Contact list word
     embed = discord.Embed(title = "List commands", description = "Use '=list'",color = ctx.author.color)
     embed.add_field(name = "Basic",value=
     "TOBI but in json file\n"
@@ -109,8 +109,8 @@ async def Network(ctx): #Network
 
 @client.event 
 async def on_member_join(member): # join
-    role = discord.utils.get(member.server.roles,name = 'USERS')
-    await client.add_roles(member, role)
+    role = discord.utils.get(member.server.roles,name = 'USERS') 
+    await client.add_roles(member, role) #Give user USER role to new member
     print(f'{member} has joined the server.') #TODO
     with open('users.json', 'r') as f:
         users = json.load(f)
