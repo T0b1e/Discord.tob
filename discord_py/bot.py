@@ -155,7 +155,6 @@ async def level_up(users, user, channel):
             await client.send_message('Congratulation Mr.{user.mention}')
             users[user.id]["level"] = level_End
 
-
 @client.command() #userinfo
 async def userinfo(ctx, member:discord.Member):
     roles = [role for role in member.roles]
@@ -228,7 +227,6 @@ async def attack(ctx, member:discord.Member):
          await ctx.send("U Miss lol")
     #await ctx.send(finalskill)
     #await ctx.send(f'attacked {member.mention} by {skill} ')
-
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time:int):#
