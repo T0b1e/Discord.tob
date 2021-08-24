@@ -240,7 +240,7 @@ async def bomb(ctx,Time:int):#
         Time -= 1
         text = 10 + int(s)
         if(timeleft == "00:00:01"):
-            await ctx.channel.purge(limit=(x + 1)*2)#channel.purge(limit=amount)
+           await ctx.channel.purge(limit=(x + 1)*2)#channel.purge(limit=amount)
 
 @client.command() #disconnect user
 async def shoot(ctx,member:discord.Member):
