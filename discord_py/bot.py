@@ -149,11 +149,9 @@ async def change_status():
 @client.command() # ping pong
 async def ping(ctx):
     await ctx.send("pong")
-
+ 
 @client.command() # plus _ _
 async def plus(ctx,a: float,b: float):
-    #if a > 50000 and b > 50000:
-    #    await ctx.send('To much number try less than 50,000')
     if a < 50000 and b < 50000:
         ans = a + b
         await ctx.send(f'Answer from {str(a)} + {str(b)} is {ans}')
@@ -227,8 +225,6 @@ async def attack(ctx, member:discord.Member):
         await ctx.send("ban commnad")
     else:
          await ctx.send("U Miss lol")
-    #await ctx.send(finalskill)
-    #await ctx.send(f'attacked {member.mention} by {skill} ')
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time:int):#
@@ -299,23 +295,6 @@ async def tobiinfo(ctx):
     em.add_field(name='Report reqest',value='https://forms.gle/2yhJfcPBpTbmWsFbA')
     await ctx.send(embed = em)
 
-@client.command(invoke_without_command = True) #updateinfo
-async def updateinfo(ctx):
-    em = discord.Embed(title = "TOBI Update information", description = "Use '=updateinfo'",color = ctx.author.color)
-    em.add_field(name = "Info",value=
-    "**Prefix change from / to = **\n"
-    "**Spawn**\n"
-    "**Music command** = play,stop,pause,resume\n"
-    "**Calculater Mode** = plus,minus,multiplie,divide\n"
-    "**Member cout**\n"
-    "**UserInfo**\n"
-    "**Voting, Poll** \n"
-    "**Gacha** = number,member\n"
-    "**Mute** = mute,unmute\n"
-    "**Coming soon** function = queue, skip, Homework notification, Uptime Classroom")
-    em.set_footer(text="Version 0.5.1 (5/8/2021)")
-    await ctx.send(embed = em)
-
 @client.command() #git
 async def git(ctx):
     em = discord.Embed(title = "Github repo", description = "Use '=git'",color = ctx.author.color)
@@ -382,10 +361,7 @@ async def gacha_group(ctx):
     x = 0
     for x in range (10):
         lucky = random.choice(person)
-    #final = len(lucky) > person/2
-    #final = split(lucky)
     await ctx.send(f'lucky person is {lucky}')
-    #print(lucky)
 
 @client.command(pass_context = True) #spawn
 async def spawn(ctx):
@@ -404,12 +380,7 @@ async def play(ctx, url : str):
     except PermissionError:
         await ctx.send("Wait for the current playing music to end or use the 'stop' command")
         return
-
-    """if(ctx.author.voice):
-        channel = ctx.message.author.voice.channel
-        await channel.connect()
-    else:
-        await ctx.send("you're not in the voice channel")"""
+        
     channel = ctx.message.author.voice.channel
     print(channel)
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= str(channel))#Finish
