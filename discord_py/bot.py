@@ -328,36 +328,12 @@ async def poll(ctx,*,message):
     await msg.add_reaction('👎')
     x = len(message.reactions)
     print(x)
-    
-@client.command() #Vote for ban
-async def mutevote(ctx, member :discord.Member):
-    Yes =   '👍'
-    No =    '👎'
-    embed = discord.Embed(title = f"Vote for mute {member} ", description = f"If vote has like more than 10 TOBI will mute {member} forever",color = ctx.author.color)
-    msg = await ctx.channel.send(embed=embed)
-    await msg.add_reaction('👍')
-    await msg.add_reaction('👎')
-    print(len(Yes)) #BUG
 
 @client.command() #Vote
 async def vote(ctx, member :discord.Member):
     await ctx.send(f"Recieve Vote {member}")
     time.sleep(10)
     await ctx.channel.purge(limit=2)
-
-@client.command() #Vote for ban
-async def banvote(ctx, member :discord.Member,message):
-    Yes = True
-    No = False
-    embed = discord.Embed(title = "Vote for ban", description = f"{message}",color = ctx.author.color)
-    embed.add_field(name = "Vote (Majority vote)",value="for justice")
-    msg = await ctx.channel.send(embed=embed)
-    await msg.add_reaction(Yes)
-    await msg.add_reaction(No)
-    if Yes > 10:
-        await member.ban
-    if No > Yes:
-         await ctx.send("You're free now")
 
 @client.command()
 async def butt(ctx):
