@@ -21,11 +21,12 @@ import webbrowser
 import json
 
 from discord_components.client import DiscordComponents
+from discord_components import *
 
 os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py') #BUG
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
-
+ddb = DiscordComponents(client) #Get lib name discord component
 #Cogs
 """ @client.command()
 async def load(ctx,extension):
@@ -55,7 +56,7 @@ async def on_ready(): #Event client ready
     await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))"""
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help')) #Change status to =help
     print(f'{client.user.name} is online') #Print TOBI is online
-    DiscordComponents(client) #Get lib name discord component
+   
 
 @client.command() #list commands
 async def list(ctx): #Contact list word
@@ -206,12 +207,6 @@ async def fac(ctx,a: int):
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
 
-@client.command() #Q = mcΔt
-async def typeof(ctx,message):
-        x = typeof(message)
-        await ctx.send(x)
-
-
 @client.command()
 async def attack(ctx, member:discord.Member):
     
@@ -231,23 +226,16 @@ async def attack(ctx, member:discord.Member):
 @client.command() #clear message count command text
 async def bomb(ctx,Time:int):#
     x = Time
-    while Time > 0:
-        m, s = divmod(Time,60)
-        h, m = divmod(m, 60)
-        timeleft = str(h).zfill(2) + ":" + str(m).zfill(2) + ":" + str(s).zfill(2)
-        await ctx.send(timeleft)#+ "\r", end=""
+    if Time > 120:
+        await ctx.send('Calm down bro Limit of bomb is 120')
+    elif Time <= 1:
+        await ctx.send('Just 1 more')
+    for y in range(Time):
         time.sleep(1)
-        Time -= 1
-        text = 10 + int(s)
-        if(timeleft == "00:00:01"):
-           await ctx.channel.purge(limit=(x + 1)*2)#channel.purge(limit=amount)
-
-@client.command() #disconnect user
-async def shoot(ctx,member:discord.Member):
-    if member.is_connected():
-        await member.disconnect()
-    else:
-        await ctx.send("This guys not in channel")
+        timer = y + 1
+        await ctx.send(timer) 
+        if timer == Time:
+            await ctx.channel.purge(limit= (x ** 2) + 10)
 
 @client.command() #report requested
 async def report(ctx, member:discord.Member, message,a :int):
@@ -259,12 +247,6 @@ async def report(ctx, member:discord.Member, message,a :int):
     await channel.send(embed = em4)
 
     #if report requested is more than 10 people and User vote is for vote for problem.
-
-#def reportrequest():
-@client.command()
-async def jsons(ctx):
-    with open('report.json') as f:
-        await ctx.send("pass")
 
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
@@ -327,21 +309,6 @@ async def updateinfo(ctx):
     em.set_footer(text="Version 0.5.1 (5/8/2021)")
     await ctx.send(embed = em)
 
-@client.group(invoke_without_command = True) #help
-async def command(ctx):
-    em = discord.Embed(title = "Help", description = "Use '=help <command>'",color = ctx.author.color)
-    em.add_field(name = "Calculator",value="plus, minus, multiplie,divide")
-    em.add_field(name = "Music",value="play, stop, pause, resume, leave")
-    em.add_field(name = "Gacha",value= "Gacha _ _, Gacham")
-    em.add_field(name = "Basic Command",value= "userinfo")
-    em.add_field(name = "Bot", value= "tobiinfo, updateinfo")
-    await ctx.send(embed = em)
-
-@client.command() #helpplus
-async def helpplus(ctx):
-    em = discord.Embed(title = "plus", description = "Use '=plus <Number>_<Number>'",color = ctx.author.color)
-    await ctx.send(embed = em)
-
 @client.command() #git
 async def git(ctx):
     em = discord.Embed(title = "Github repo", description = "Use '=git'",color = ctx.author.color)
@@ -392,6 +359,19 @@ async def banvote(ctx, member :discord.Member,message):
     if No > Yes:
          await ctx.send("You're free now")
 
+@client.command()
+async def butt(ctx):
+    m = await ctx.send(
+        "Button command",
+        buttons = [
+            Button(style=ButtonStyle.blue,label = 'click me')
+        ],
+    )
+    res = await ddb.wait_for_button_click(m)
+    await res.respond(
+        type = InteractionType.ChannelMessageWithSource,
+        content=f'{res.button.label} has clicked')
+
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
       embed = discord.Embed(title = "Gacha", description = f"{prize}",color = ctx.author.color)
@@ -430,27 +410,6 @@ async def spawn(ctx):
         await channel.connect()
     else:
         await ctx.send("you're not in the voice channel")
-        
-@client.command(pass_context = True) #join
-async def lofi(ctx):
-    if(ctx.author.voice):
-        channel = ctx.message.author.voice.channel
-        voice = await channel.connect()
-        source = FFmpegPCMAudio('samurai-japanese-lofi-hiphop-mix.mp3')
-        player = voice.play(source)
-    else:
-        await ctx.send("you're not in the voice channel")
-
-#Chem Bio Phy Math Maths Math+ Socio His Thai Eng Empty Tcas Ondemand Gym
-@client.command() #join
-async def time(ctx):
-    Now = dt.datetime.now()
-    day = Now.strftime('%A')
-    hour = Now.strftime('%H')
-    minutes = Now.strftime('%M')
-    seconds = Now.strftime('%S')
-    today = day,hour,minutes,seconds
-    await ctx.send(today)
 
 @client.command() #play
 async def play(ctx, url : str):
