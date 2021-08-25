@@ -26,7 +26,7 @@ from discord_components import *
 os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py') #BUG
 client = commands.Bot(command_prefix= '=')
 client.remove_command("help")
-ddb = DiscordComponents(client) #Get lib name discord component
+DiscordComponents(client) #Get lib name discord component
 #Cogs
 """ @client.command()
 async def load(ctx,extension):
@@ -315,10 +315,6 @@ async def git(ctx):
     em.add_field(name = "Github",value="https://github.com/T0b1e/Discord.tob.git")
     await ctx.send(embed = em)
 
-@client.command() # Knock Knock
-async def knock(ctx,knock:str):
-    await ctx.send("who r u?")
-
 @client.command() #poll
 async def poll(ctx,*,message):
     em = discord.Embed(title = "Vote", description = f"{message}",color = ctx.author.color)
@@ -336,17 +332,19 @@ async def vote(ctx, member :discord.Member):
     await ctx.channel.purge(limit=2)
 
 @client.command()
-async def butt(ctx):
-    m = await ctx.send(
-        "Button command",
-        buttons = [
-            Button(style=ButtonStyle.blue,label = 'click me')
-        ],
+async def butt(self,ctx):
+    await ctx.channel.send(
+        "Test Button",
+        component=[
+            Button(style=ButtonStyle.blue,label=['Click me'])
+        ]
     )
-    res = await ddb.wait_for_button_click(m)
-    await res.respond(
-        type = InteractionType.ChannelMessageWithSource,
-        content=f'{res.button.label} has clicked')
+    res = await self.client.wait_for('Button_click')
+    if res.channel == ctx.channel:
+        await res.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f'{res.component.label}clicked'
+        )
 
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
