@@ -176,32 +176,64 @@ async def ping(ctx):
     await ctx.send("pong")
 
 @client.command() # plus _ _
-async def plus(ctx, a: float, b: float):
-    await ctx.send(a + b)
-
+async def plus(ctx,a: float,b: float):
+    #if a > 50000 and b > 50000:
+    #    await ctx.send('To much number try less than 50,000')
+    if a < 50000 and b < 50000:
+        ans = a + b
+        await ctx.send(f'Answer from {str(a)} + {str(b)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 @client.command() # minus _ _
-async def minus(ctx, a: float, b: float):
-    await ctx.send(a - b)
+async def minus(ctx,a: float,b: float):
+    if a < 50000 and b < 50000:
+        ans = a - b
+        await ctx.send(f'Answer from {str(a)} - {str(b)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # multiplie _ _
 async def multiplie(ctx,a: float,b: float):
-    await ctx.send(a * b)
+    if a < 50000 and b < 50000:
+        ans = a * b
+        await ctx.send(f'Answer from {str(a)} * {str(b)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # multiplie _ _
 async def divide(ctx,a: float,b: float):
-    await ctx.send(a / b)
+    if b == 0:
+        await ctx.send('None')
+    if a < 50000 and b < 50000:
+        ans = a / b
+        await ctx.send(f'Answer from {str(a)} / {str(b)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # sqrt
 async def sqrt(ctx,a: float):
-        await ctx.send(math.sqrt(a))
+    if a < 50000:
+        ans = math.sqrt(a)
+        await ctx.send(f'Answer from sqrt{str(a)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # sqrt
 async def expo(ctx,a: int,b: int):
-        await ctx.send(a**b)
+    if a < 50000 and b < 50000:
+        ans = a ** b
+        await ctx.send(f'Answer from {str(a)} ^ {str(b)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # factorial
 async def fac(ctx,a: int):
-        await ctx.send(math.factorial(a))
+    if a < 50000:
+        ans = math.factorial(a)
+        await ctx.send(f'Answer from factorail{str(a)} is {ans}')
+    else:
+        await ctx.send('To much Integer,Try less than 50,000')
+  
 
 @client.command() #Q = mcΔt
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
@@ -363,8 +395,11 @@ async def prize(ctx, mins :int, *,prize :str):
 
 @client.command(pass_context = True) #gacha number
 async def gacha(ctx, num1:int ,num2:int):
-    embed = discord.Embed(title = "Gacha", description = (random.randint(num1,num2)),color = ctx.author.color)
-    await ctx.send(embed = embed)
+    if num1 < 100 and num2 <100:
+        embed = discord.Embed(title = "Gacha", description = (random.randint(num1,num2)),color = ctx.author.color)
+        await ctx.send(embed = embed)
+    else:
+        await ctx.send('To much number,Try less than 100')
 
 @client.command() #Special command
 async def gacha_group(ctx):
