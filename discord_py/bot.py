@@ -11,7 +11,7 @@ from datetime import datetime
 import datetime as dt
 #import datetime #set time
 import time #Class,Count
-#from time import sleep
+from time import sleep
 import calendar #Class
 
 import random #gacha prize
@@ -253,25 +253,11 @@ async def shoot(ctx,member:discord.Member):
 async def report(ctx, member:discord.Member, message,a :int):
     channel = client.get_channel(873029322288558150)
     em1 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.red())
-    em2 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.orange())
-    em3 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.green())
     em4 = discord.Embed(title = "I got Report requested", description =f"About issue made by {member} with {message}: level of problem {a}",color = discord.Color.blue())
-    #Level a > 5 zone: red , a 4-5
-    if(a > 6): # 6-  
-        await ctx.send(embed = em1)
-    if(a > 3 and a <= 6): # 4-5
-        await ctx.send(embed = em2)
-    if(a <= 3): # -3
-        await ctx.send(embed = em3)
-    await channel.send(embed = em4)
-"""    with open('report.json') as f:
-        s = f.read()
-    print(S)"""
 
-"""with open('users.json','r') as f:
-        users = json.load(f)
-    
-    await update_data(users, message.author)"""
+    await ctx.send(embed = em1)
+    await channel.send(embed = em4)
+
     #if report requested is more than 10 people and User vote is for vote for problem.
 
 #def reportrequest():
@@ -314,19 +300,6 @@ async def unmute(ctx, member: discord.Member):
     await member.send(f"You were unmuted in the server {ctx.guild.name}")
 
 @client.command(invoke_without_command = True) #tobiinfo
-async def json(ctx):
-    data = {
-    "name": "TOBI",
-    "JOB": "Assistance",
-    "Version": "0.6.1",
-    "Created": "12/01/2019",
-    "Last Update": "5/8/2021",
-    "Library": "discord, datetime, asyncio, random, math, os",
-    "command": "28 commands"
-    }
-    await ctx.send(data)
-
-@client.command(invoke_without_command = True) #tobiinfo
 async def tobiinfo(ctx):
     em = discord.Embed(title = "TOBI information.json", description = "Use '=tobiinfo'",color = ctx.author.color)
     em.add_field(name = "Info",value=
@@ -334,6 +307,7 @@ async def tobiinfo(ctx):
     "Version 0.5.1 (5/8/2021)\n"
     "Born 12/7/2020\n"
     "Discordbot.js © TOB · Narongkorn,Hosted by TOB Raspberrypi, distributed under the PSUWIT license")
+    em.add_field(name='Report reqest',value='https://forms.gle/2yhJfcPBpTbmWsFbA')
     await ctx.send(embed = em)
 
 @client.command(invoke_without_command = True) #updateinfo
@@ -488,7 +462,14 @@ async def play(ctx, url : str):
         await ctx.send("Wait for the current playing music to end or use the 'stop' command")
         return
 
-    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= "General")#"ห้องเมียแขกและเกาหลี"
+    """if(ctx.author.voice):
+        channel = ctx.message.author.voice.channel
+        await channel.connect()
+    else:
+        await ctx.send("you're not in the voice channel")"""
+    channel = ctx.message.author.voice.channel
+    print(channel)
+    voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= str(channel))#Finish
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
 
