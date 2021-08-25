@@ -1,3 +1,9 @@
+"""
+Hello my name is Narongkorn kitrungrot,I made this code for entertaning and learning python,If this code doesn't work pls tell me at psuwit.narongkron.nk@gmail.com
+Name TOBI version 0.8.1
+python version
+"""
+
 import discord
 from discord.ext import commands,tasks
 
@@ -314,7 +320,7 @@ async def tobiinfo(ctx):
     em = discord.Embed(title = "TOBI information.json", description = "Use '=tobiinfo'",color = ctx.author.color)
     em.add_field(name = "Info",value=
     "Build by Mr. Narongkorn kitrungrot\n"
-    "Version 0.5.1 (5/8/2021)\n"
+    "Version 0.8.1 (25/8/2021)\n"
     "Born 12/7/2020\n"
     "Discordbot.js © TOB · Narongkorn,Hosted by TOB Raspberrypi, distributed under the PSUWIT license")
     em.add_field(name='Report reqest',value='https://forms.gle/2yhJfcPBpTbmWsFbA')
