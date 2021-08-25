@@ -14,10 +14,8 @@ import youtube_dl #play url
 import os #play os
 
 from datetime import datetime
-import datetime as dt
 #import datetime #set time
 import time #Class,Count
-from time import sleep
 import calendar #Class
 
 import random #gacha prize
@@ -28,7 +26,6 @@ import json
 
 from discord_components.client import DiscordComponents
 from discord_components import *
-
 client = commands.Bot(command_prefix= '=')
 DiscordComponents(client) #Get lib name discord component
 
@@ -51,8 +48,7 @@ async def list(ctx): #Contact list word
     "**prize _ _**      for Give away prize from Admin by set time and prize\n"
     "**poll**           for vote Good or Bad (No limit user)\n"
     "**spawn**          for spawn TOBI to channel\n"
-    "**bomb**           for delete message in channel\n"
-    "**attack**          for attack someone by disconnect,move member\n")
+    "**bomb**           for delete message in channel\n")
     embed.add_field(name= "Report",value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
     embed.add_field(name= "Math",value=
@@ -75,9 +71,6 @@ async def list(ctx): #Contact list word
     "**unmute @___**    for unmuted someone\n"
     "**kick @___**      for kick someone from the server\n"
     "**ban @___**       for ban someone from the server\n"
-    "**banvote**        for ban Someone but use Vote from Admin\n"
-    "**mutevote**       for mute Someone but use Vote from Admin\n"
-    "**kickvote**       for kick Someone but use Vote from Admin\n"
     "**vote**           for vote member when Vote was started\n")
     embed.add_field(name= "Tobi",value=
     "**tobiinfo**       for TOBI information\n"
