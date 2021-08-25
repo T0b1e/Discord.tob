@@ -29,28 +29,8 @@ import json
 from discord_components.client import DiscordComponents
 from discord_components import *
 
-os.chdir(r'C:\Users\asus\Desktop\Udemy\Discord.tob\discord_py') #BUG
 client = commands.Bot(command_prefix= '=')
-client.remove_command("help")
 DiscordComponents(client) #Get lib name discord component
-#Cogs
-""" @client.command()
-async def load(ctx,extension):
-    client.load_extension(f'cogs.{extension}')
-
-@client.command()
-async def unload(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
-
-@client.command()
-async def reload(ctx,extension):
-    client.unload_extension(f'cogs.{extension}')
-    client.load_extension(f'cogs.{extension}')
-
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        client.load_extension(f'cogs.{filename[:-3]}') #cut .py 3 char """
-
 
 @client.event
 async def on_ready(): #Event client ready
@@ -115,14 +95,7 @@ async def on_member_join(member): # join
     role = discord.utils.get(member.server.roles,name = 'USERS') 
     await client.add_roles(member, role) #Give user USER role to new member
     print(f'{member} has joined the server.') #TODO
-    with open('users.json', 'r') as f:
-        users = json.load(f)
-
-    await update_data(users, member) 
-
-    with open('users.json', 'w') as f:
-        json.dump(users, f)
-
+   
 @client.event
 async def on_member_remove(member): # remove
     print(f'{member} has removed the server.')
@@ -222,7 +195,7 @@ async def sqrt(ctx,a: float):
 
 @client.command() # sqrt
 async def expo(ctx,a: int,b: int):
-    if a < 50000 and b < 50000:
+    if  0 > a < 50000 and 0 > b < 50000:
         ans = a ** b
         await ctx.send(f'Answer from {str(a)} ^ {str(b)} is {ans}')
     else:
