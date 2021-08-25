@@ -48,12 +48,8 @@ for filename in os.listdir('./cogs'):
 
 @client.event
 async def on_ready(): #Event client ready
-    channel = client.get_channel(843680768835190796) #Get channel id
+    channel = client.get_channel(880036878038990858) #Get channel id
     await channel.send('TOBI is on ready, Type "=list" to start')
-    """now = dt.datetime.now()
-    birthday = dt.datetime(year=2022, month=1, day=12,)
-    count = birthday - now
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game(f'Count down {count}'))"""
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help')) #Change status to =help
     print(f'{client.user.name} is online') #Print TOBI is online
    
