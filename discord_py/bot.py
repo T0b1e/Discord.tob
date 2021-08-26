@@ -407,6 +407,15 @@ async def spawn(ctx):
     else:
         await ctx.send("you're not in the voice channel")
 
+@client.command()
+async def volume(ctx, volume: int):
+    if volume < 0:
+           print('To Low')
+
+    if volume > 150:
+            print('To High')
+    await ctx.send(f"Volume set to {volume:,}%")
+
 @client.command() #play
 async def play(ctx, url : str):
     song_there = os.path.isfile("song.mp3")
