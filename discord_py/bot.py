@@ -6,6 +6,7 @@ python version
 
 from asyncio.tasks import sleep
 import discord
+from discord import colour
 from discord.colour import Color
 from discord.ext import commands,tasks
 
@@ -421,10 +422,14 @@ async def volume(ctx, volume: int):
 
     if volume > 150:
             print('To High')
-    await ctx.send(f"Volume set to {volume:,}%")
+    msg = await ctx.send(f"Volume set to {volume:,}%")
+    await msg.add_reaction('🔊')
 
 @client.command() #play
 async def play(ctx, url : str):
+    embed_play = discord.Embed(title = f'Play {url}',description = 'Playing music in queue',colour = discord.Color.green)
+    msg = await ctx.send(embed = embed_play)
+    await msg.add_reaction('🎶')
     song_there = os.path.isfile("song.mp3")
     try:
         if song_there:
@@ -438,7 +443,7 @@ async def play(ctx, url : str):
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= str(channel))#Finish
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
-
+    
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
@@ -465,6 +470,9 @@ async def leave(ctx):
 
 @client.command() #pause
 async def pause(ctx):
+    embed_pause = discord.Embed(title = f'pause  song',description = 'Playing music in queue',colour = discord.Color.dark_grey)
+    msg = await ctx.send(embed = embed_pause)
+    await msg.add_reaction('🔇')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_playing():
         voice.pause()
@@ -474,6 +482,9 @@ async def pause(ctx):
 
 @client.command() #resume
 async def resume(ctx):
+    embed_resume = discord.Embed(title = f'Resume the song song',description = 'Playing music in queue',colour = discord.Color.orange)
+    msg = await ctx.send(embed = embed_resume)
+    await msg.add_reaction('🔉')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_paused():
         voice.resume()
@@ -483,8 +494,11 @@ async def resume(ctx):
 
 @client.command() #stop
 async def stop(ctx):
+    embed_stop = discord.Embed(title = 'Stop song',description = 'Stop playing music in queue',colour = discord.Color.red)
+    msg = await ctx.send(embed = embed_stop)
+    await msg.add_reaction('🔴')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
-    #await ctx.send("**stop**") 
+    
 client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro')
 #ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.e0I1pWWRE3rUZwka7C8jPayiHgA
