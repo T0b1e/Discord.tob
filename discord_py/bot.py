@@ -142,7 +142,12 @@ async def userinfo(ctx, member:discord.Member):
 @client.command() # ping pong
 async def ping(ctx):
     await ctx.send("pong")
- 
+
+@client.command()
+async def temppc(ctx):
+        CPULOARD= psutil.cpu_percent()
+        await ctx.send(f"{CPULOARD} %")
+
 @client.command() # plus _ _
 async def plus(ctx,a: float,b: float):
     if a < 50000 and b < 50000:
