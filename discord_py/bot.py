@@ -134,11 +134,6 @@ async def userinfo(ctx, member:discord.Member):
     embed.add_field(name=f"Role({len(roles)})" ,value=" ".join([role.mention for role in roles]))
     await ctx.send(embed=embed)
 
-@tasks.loop(seconds=2)
-async def change_status():
-    channel = client.get_channel(875074992902131772)
-    await channel.send('here')
-
 @client.command() # ping pong
 async def ping(ctx):
     await ctx.send("pong")
