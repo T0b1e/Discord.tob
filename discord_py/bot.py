@@ -14,6 +14,7 @@ from discord.utils import get
 import asyncio #gacha
 import youtube_dl #play url
 import os #play os
+import psutil
 
 from datetime import datetime
 
@@ -83,6 +84,7 @@ async def list(ctx): #Contact list word
 
 @client.command(description="Gets the bot's latency.")
 async def Network(ctx): #Network
+    print(ctx)
     latency = round(client.latency * 1000, 1)
     await ctx.send(f"Network = {latency}ms")
 
