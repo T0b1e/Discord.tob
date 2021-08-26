@@ -27,7 +27,7 @@ import json
 from discord_components.client import DiscordComponents
 from discord_components import *
 client = commands.Bot(command_prefix= '=')
-DiscordComponents(client) #Get lib name discord component
+
 
 @client.event
 async def on_ready(): #Event client ready
@@ -35,7 +35,7 @@ async def on_ready(): #Event client ready
     await channel.send('TOBI is on ready, Type "=list" to start')
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help')) #Change status to =help
     print(f'{client.user.name} is online') #Print TOBI is online
-   
+    DiscordComponents(client) #Get lib name discord component
 
 @client.command() #list commands
 async def list(ctx): #Contact list word
@@ -250,6 +250,7 @@ async def ban(ctx, member :discord.Member, *,reason = "Ban because you don't fol
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mute(ctx, member: discord.Member,*, reason=None):
+    embed = discord.Embed(title = 'Mute command Embed',description =f'We were Baned {member}')
     guild = ctx.guild
     mutedRole = discord.utils.get(guild.roles, name="Muted")
 
@@ -260,7 +261,8 @@ async def mute(ctx, member: discord.Member,*, reason=None):
             await channel.set_permissions(mutedRole, speak=False, send_messages=True, read_message_history=False, read_messages=False)
 
     await member.add_roles(mutedRole, reason=reason)
-    await ctx.send(f"Muted {member.mention} for reason {reason}")
+    await ctx.send(embed=embed)
+    #await ctx.send(f"Muted {member.mention} for reason {reason}")
     await member.send(f"You were muted in the server {guild.name} for {reason}")
 
 @client.command(description="Unmutes a specified user.") #Unmute
@@ -306,19 +308,15 @@ async def vote(ctx, member :discord.Member):
     await ctx.channel.purge(limit=2)
 
 @client.command()
-async def butt(self,ctx):
-    await ctx.channel.send(
+async def button(ctx):
+    await ctx.send(
         "Test Button",
-        component=[
-            Button(style=ButtonStyle.blue,label=['Click me'])
+        components =[
+            Button(label='Click me',style=ButtonStyle.blue)
         ]
     )
-    res = await self.client.wait_for('Button_click')
-    if res.channel == ctx.channel:
-        await res.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f'{res.component.label}clicked'
-        )
+    res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
+    await res.respond(content='button clicked')
 
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
