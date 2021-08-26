@@ -320,9 +320,8 @@ async def button(ctx):
 
 @client.command()
 async def voting(ctx):
-
     await ctx.send(
-        f"Voting",
+        f"Voting System Start",
         components =[
             Button(label= 'Agree' ,style=ButtonStyle.blue),
             Button(label= 'Disagree' ,style=ButtonStyle.red),
