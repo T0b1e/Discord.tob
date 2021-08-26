@@ -427,7 +427,7 @@ async def volume(ctx, volume: int):
 
 @client.command() #play
 async def play(ctx, url : str):
-    embed_play = discord.Embed(title = f'Play {url}',description = 'Playing music in queue',color = discord.Color.green)
+    embed_play = discord.Embed(title = f'Play {url}',description = 'Playing music in queue',color = ctx.author.color)
     msg = await ctx.send(embed = embed_play)
     await msg.add_reaction('🎶')
     song_there = os.path.isfile("song.mp3")
@@ -470,7 +470,7 @@ async def leave(ctx):
 
 @client.command() #pause
 async def pause(ctx):
-    embed_pause = discord.Embed(title = f'pause  song',description = 'Playing music in queue',color = discord.Color.dark_grey)
+    embed_pause = discord.Embed(title = f'pause  song',description = 'Playing music in queue',color = ctx.author.color)
     msg = await ctx.send(embed = embed_pause)
     await msg.add_reaction('🔇')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
@@ -482,7 +482,7 @@ async def pause(ctx):
 
 @client.command() #resume
 async def resume(ctx):
-    embed_resume = discord.Embed(title = f'Resume the song song',description = 'Playing music in queue',color = discord.Color.orange)
+    embed_resume = discord.Embed(title = f'Resume the song song',description = 'Playing music in queue',color = ctx.author.color)
     msg = await ctx.send(embed = embed_resume)
     await msg.add_reaction('🔉')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
@@ -494,7 +494,7 @@ async def resume(ctx):
 
 @client.command() #stop
 async def stop(ctx):
-    embed_stop = discord.Embed(title = 'Stop song',description = 'Stop playing music in queue',color = discord.Color.red)
+    embed_stop = discord.Embed(title = 'Stop song',description = 'Stop playing music in queue',color = ctx.author.color)
     msg = await ctx.send(embed = embed_stop)
     await msg.add_reaction('🔴')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
