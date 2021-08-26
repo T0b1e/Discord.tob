@@ -4,7 +4,9 @@ Name TOBI version 0.8.1
 python version
 """
 
+from asyncio.tasks import sleep
 import discord
+from discord.colour import Color
 from discord.ext import commands,tasks
 
 from discord.player import FFmpegPCMAudio
@@ -14,6 +16,7 @@ import youtube_dl #play url
 import os #play os
 
 from datetime import datetime
+
 #import datetime #set time
 import time #Class,Count
 import calendar #Class
@@ -224,7 +227,7 @@ async def bomb(ctx,Time:int):#
     for y in range(Time):
         time.sleep(1)
         timer = y + 1
-        await ctx.send(timer) 
+        #await ctx.send(timer) 
         if timer == Time:
             await ctx.channel.purge(limit= (x ** 2) + 10)
 
@@ -250,7 +253,7 @@ async def ban(ctx, member :discord.Member, *,reason = "Ban because you don't fol
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mute(ctx, member: discord.Member,*, reason=None):
-    embed = discord.Embed(title = 'Mute command Embed',description =f'We were Baned {member}')
+    embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member}',Color= discord.Color.red())
     guild = ctx.guild
     mutedRole = discord.utils.get(guild.roles, name="Muted")
 
@@ -264,6 +267,36 @@ async def mute(ctx, member: discord.Member,*, reason=None):
     await ctx.send(embed=embed)
     #await ctx.send(f"Muted {member.mention} for reason {reason}")
     await member.send(f"You were muted in the server {guild.name} for {reason}")
+
+@client.command(description="Mutes the specified user.") #Mute
+@commands.has_permissions(manage_messages=True)
+async def mutetime(ctx, member: discord.Member,time:int):
+    embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member} for {time}',Color= discord.Color.red())
+    embed1 = discord.Embed(title = 'Mute command Embed !!!',description =f'We were unMute {member}',Color= discord.Color.green())
+    guild = ctx.guild
+    mutedRole = discord.utils.get(guild.roles, name="Muted")
+    
+    if not mutedRole:
+        mutedRole = await guild.create_role(name="Muted")
+
+        for channel in guild.channels:
+            await channel.set_permissions(mutedRole, speak=False, send_messages=True, read_message_history=False, read_messages=False)
+
+    await member.add_roles(mutedRole)
+    x = time
+    y = 0
+    timer = 1
+    for y in range(time):
+        print(timer)
+        sleep(1)
+        timer = y + 1
+        if timer == x - 1 :
+            await member.remove_roles(mutedRole)
+            await ctx.send(f"Unmuted {member.mention}")
+            await member.send(f"You were unmuted in the server {guild.name} for {time}")
+            await ctx.send(embed = embed1)
+    await ctx.send(embed=embed)
+    await member.send(f"You were muted in the server {guild.name} for {time}")
 
 @client.command(description="Unmutes a specified user.") #Unmute
 @commands.has_permissions(manage_messages=True)
@@ -328,6 +361,10 @@ async def voting(ctx):
             Button(label= 'No vote' ,style=ButtonStyle.green)
         ]
     )
+    res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
+    await res.respond(content='button clicked')
+    res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
+    await res.respond(content='button clicked')
     res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
     await res.respond(content='button clicked')
     
