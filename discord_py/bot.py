@@ -318,6 +318,20 @@ async def button(ctx):
     res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
     await res.respond(content='button clicked')
 
+@client.command()
+async def voting(ctx):
+
+    await ctx.send(
+        f"Voting",
+        components =[
+            Button(label= 'Agree' ,style=ButtonStyle.blue),
+            Button(label= 'Disagree' ,style=ButtonStyle.red),
+            Button(label= 'No vote' ,style=ButtonStyle.green)
+        ]
+    )
+    res = await client.wait_for('button_click', check=lambda i: i.component.label.startswith("Click"))
+    await res.respond(content='button clicked')
+    
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
       embed = discord.Embed(title = "Gacha", description = f"{prize}",color = ctx.author.color)
