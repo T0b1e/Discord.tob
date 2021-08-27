@@ -1,6 +1,6 @@
 """
 Hello my name is Narongkorn kitrungrot,I made this code for entertaning and learning python,If this code doesn't work pls tell me at psuwit.narongkron.nk@gmail.com
-Name TOBI version 0.8.1
+Name TOBI version 0.8.5
 python version
 """
 
@@ -235,7 +235,7 @@ async def bomb(ctx,Time:int):#
     for y in range(Time):
         time.sleep(1)
         timer = y + 1
-        #await ctx.send(timer) 
+        await ctx.send(timer) 
         if timer == Time:
             await ctx.channel.purge(limit= (x ** 2) + 10)
 
