@@ -323,6 +323,7 @@ async def tobiinfo(ctx):
     "Version 0.8.1 (25/8/2021)\n"
     "Born 12/7/2020\n"
     "Discordbot.js © TOB · Narongkorn,Hosted by TOB Raspberrypi, distributed under the PSUWIT license")
+    em.add_field(name='Supporter',value='https://ko-fi.com/narongkorn')
     em.add_field(name='Report reqest',value='https://forms.gle/2yhJfcPBpTbmWsFbA')
     await ctx.send(embed = em)
 
