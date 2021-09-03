@@ -22,7 +22,7 @@ from datetime import datetime
 #import datetime #set time
 import time #Class,Count
 import calendar #Class
-
+import requests
 import random #gacha prize
 import math
 
@@ -145,7 +145,7 @@ async def ping(ctx):
     await ctx.send("pong")
 
 @client.command()
-async def temppc(ctx):
+async def temp(ctx):
         CPULOARD= psutil.cpu_percent()
         await ctx.send(f"{CPULOARD} %")
 
@@ -210,6 +210,27 @@ async def fac(ctx,a: int):
 @client.command() #Q = mcΔt
 async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
+
+@client.command()
+async def weather(ctx,city:str):
+    city = city
+    api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
+    
+    json_data = requests.get(api).json()
+    condition = json_data['weather'][0]['main']
+    temp = int(json_data['main']['temp'] - 273.15)
+    min_temp = int(json_data['main']['temp_min'] - 273.15)
+    max_temp = int(json_data['main']['temp_max'] - 273.15)
+    pressure = json_data['main']['pressure']
+    humidity = json_data['main']['humidity']
+    wind = json_data['wind']['speed']
+    sunrise = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunrise'] - 21600))
+    sunset = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunset'] - 21600))
+
+    final_info = condition + "\n" + str(temp) + "°C" 
+    final_data = "\n"+ "Min Temp: " + str(min_temp) + "°C" + "\n" + "Max Temp: " + str(max_temp) + "°C" +"\n" + "Pressure: " + str(pressure) + "\n" +"Humidity: " + str(humidity) + "\n" +"Wind Speed: " + str(wind) + "\n" + "Sunrise: " + sunrise + "\n" + "Sunset: " + sunset
+    await ctx.send(final_info)
+    await ctx.send(final_data)
 
 @client.command()
 async def attack(ctx, member:discord.Member):
