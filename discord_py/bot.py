@@ -53,6 +53,7 @@ async def list(ctx): #Contact list word
     "**prize _ _**      for Give away prize from Admin by set time and prize\n"
     "**poll**           for vote Good or Bad (No limit user)\n"
     "**spawn**          for spawn TOBI to channel\n"
+    "**weather**        for check weather today\n"
     "**bomb**           for delete message in channel\n")
     embed.add_field(name= "Report",value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
@@ -215,7 +216,8 @@ async def Q(ctx,m: float,c: float,t1: float,t2: float):
 async def weather(ctx,city:str):
     city = city
     api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
-    
+    embed = discord.Embed(title=f'Weather {city}',description='Today list',color = discord.Color.blue())
+
     json_data = requests.get(api).json()
     condition = json_data['weather'][0]['main']
     temp = int(json_data['main']['temp'] - 273.15)
@@ -227,10 +229,16 @@ async def weather(ctx,city:str):
     sunrise = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunrise'] - 21600))
     sunset = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunset'] - 21600))
 
-    final_info = condition + "\n" + str(temp) + "°C" 
-    final_data = "\n"+ "Min Temp: " + str(min_temp) + "°C" + "\n" + "Max Temp: " + str(max_temp) + "°C" +"\n" + "Pressure: " + str(pressure) + "\n" +"Humidity: " + str(humidity) + "\n" +"Wind Speed: " + str(wind) + "\n" + "Sunrise: " + sunrise + "\n" + "Sunset: " + sunset
-    await ctx.send(final_info)
-    await ctx.send(final_data)
+    embed.add_field(name=f'Today : {condition}',value=f'{str(temp)} °C')
+    embed.add_field(name='Min temp :',value=f'{str(min_temp)} °C')
+    embed.add_field(name='Max temp :',value=f'{str(max_temp)} °C')
+    embed.add_field(name='Pressure :',value=f'{str(pressure)} °C')
+    embed.add_field(name='Humidity :',value=f'{str(humidity)} ')
+    embed.add_field(name='Wind Speed :',value=f'{str(wind)} ')
+    embed.add_field(name='Sunrise :',value=f'{str(sunrise)} ')
+    embed.add_field(name='Sunset :',value=f'{str(sunset)} ')
+
+    await ctx.send(embed = embed)
 
 @client.command()
 async def attack(ctx, member:discord.Member):
