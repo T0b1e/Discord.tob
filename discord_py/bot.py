@@ -26,6 +26,10 @@ import requests
 import random #gacha prize
 import math
 
+import numpy as np
+from numpy import random
+from numpy import *
+
 import webbrowser
 import json
 
@@ -38,7 +42,7 @@ client = commands.Bot(command_prefix= '=')
 async def on_ready(): #Event client ready
     channel = client.get_channel(880036878038990858) #Get channel id
     await channel.send('TOBI is on ready, Type "=list" to start')
-    await client.change_presence(status=discord.Status.idle,activity=discord.Game('=help')) #Change status to =help
+    await client.change_presence(status=discord.Status.idle,activity=discord.Game('=list')) #Change status to =help
     print(f'{client.user.name} is online') #Print TOBI is online
     DiscordComponents(client) #Get lib name discord component
 
@@ -157,6 +161,7 @@ async def plus(ctx,a: float,b: float):
         await ctx.send(f'Answer from {str(a)} + {str(b)} is {ans}')
     else:
         await ctx.send('To much Integer,Try less than 50,000')
+
 @client.command() # minus _ _
 async def minus(ctx,a: float,b: float):
     if a < 50000 and b < 50000:
@@ -203,7 +208,7 @@ async def expo(ctx,a: int,b: int):
 async def fac(ctx,a: int):
     if a < 50000:
         ans = math.factorial(a)
-        await ctx.send(f'Answer from factorail{str(a)} is {ans}')
+        await ctx.send(f'Answer from factorial {str(a)} is {ans}')
     else:
         await ctx.send('To much Integer,Try less than 50,000')
   
@@ -213,11 +218,20 @@ async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
 
 @client.command()
+async def matrix(ctx):
+    embed = discord.Embed(title = 'Random Matrix',description = 'Random quick math')
+    matrix_01 = np.random.randint(1,10,size=(3,3))
+    matrix_02 = np.random.randint(1,10,size=(3,3))
+    
+    embed.add_field(name='Matrix A',value=matrix_01)
+    embed.add_field(name='Matrix B',value=matrix_02)
+    
+    await ctx.send(embed = embed)
+
+@client.command()
 async def weather(ctx,city:str):
     city = city
     api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
-    embed = discord.Embed(title=f'Weather {city}',description='Today list',color = discord.Color.blue())
-
     json_data = requests.get(api).json()
     condition = json_data['weather'][0]['main']
     temp = int(json_data['main']['temp'] - 273.15)
@@ -228,15 +242,39 @@ async def weather(ctx,city:str):
     wind = json_data['wind']['speed']
     sunrise = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunrise'] - 21600))
     sunset = time.strftime('%I:%M:%S', time.gmtime(json_data['sys']['sunset'] - 21600))
+    embed = discord.Embed(title=f'Weather {city}',description='Today list',color = discord.Color.blue())
 
-    embed.add_field(name=f'Today : {condition}',value=f'{str(temp)} °C')
-    embed.add_field(name='Min temp :',value=f'{str(min_temp)} °C')
-    embed.add_field(name='Max temp :',value=f'{str(max_temp)} °C')
-    embed.add_field(name='Pressure :',value=f'{str(pressure)} °C')
-    embed.add_field(name='Humidity :',value=f'{str(humidity)} ')
-    embed.add_field(name='Wind Speed :',value=f'{str(wind)} ')
-    embed.add_field(name='Sunrise :',value=f'{str(sunrise)} ')
-    embed.add_field(name='Sunset :',value=f'{str(sunset)} ')
+    if condition == 'Thunderstorm':
+        embed.add_field(name=f'Today : {condition} ⛈',value=f'{str(temp)} °C')
+
+    if condition == 'Drizzle':
+        embed.add_field(name=f'Today : {condition} 🌧',value=f'{str(temp)} °C')
+
+    if condition == 'Rain':
+        
+        embed.add_field(name=f'Today : {condition} 🌧',value=f'{str(temp)} °C')
+
+    if condition == 'Snow':
+        embed.add_field(name=f'Today : {condition} 🌨',value=f'{str(temp)} °C')
+
+    if condition == 'Atmosphere':
+        embed.add_field(name=f'Today : {condition} 🌬',value=f'{str(temp)} °C')
+
+    if condition == 'Clear':
+        embed = discord.Embed(title=f'Weather {city}',description='Today list',color = discord.Color.blue())
+        embed.add_field(name=f'Today : {condition} ☁️',value=f'{str(temp)} °C')
+
+    if condition == 'Clouds':
+        embed = discord.Embed(title=f'Weather {city}',description='Today list',color = discord.Color.blue())
+        embed.add_field(name=f'Today : {condition} ⛅️',value=f'{str(temp)} °C')
+
+    embed.add_field(name='Min temp🌡 :',value=f'{str(min_temp)} °C')
+    embed.add_field(name='Max temp💥 :',value=f'{str(max_temp)} °C')
+    embed.add_field(name='Pressure✨ :',value=f'{str(pressure)} °C')
+    embed.add_field(name='Humidity☄️ :',value=f'{str(humidity)} ')
+    embed.add_field(name='Wind Speed🌫 :',value=f'{str(wind)} ')
+    embed.add_field(name='Sunrise☀️ :',value=f'{str(sunrise)} pm')
+    embed.add_field(name='Sunset🌤 :',value=f'{str(sunset)} pm')
 
     await ctx.send(embed = embed)
 
