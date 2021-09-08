@@ -218,14 +218,16 @@ async def Q(ctx,m: float,c: float,t1: float,t2: float):
         await ctx.send(m*c*(t2-t1))
 
 @client.command()
-async def matrix(ctx):
+async def matrix(ctx,a: int,b: int):
     embed = discord.Embed(title = 'Random Matrix',description = 'Random quick math')
-    matrix_01 = np.random.randint(1,10,size=(3,3))
-    matrix_02 = np.random.randint(1,10,size=(3,3))
-    
-    embed.add_field(name='Matrix A',value=matrix_01)
-    embed.add_field(name='Matrix B',value=matrix_02)
-    
+    matrix_01 = np.random.randint(1,10,size=(a,b))
+    matrix_02 = np.random.randint(1,10,size=(a,b))
+    if a > 0 and b > 0:
+        embed.add_field(name='Matrix A',value=matrix_01)
+        embed.add_field(name='Matrix B',value=matrix_02)
+    else:
+        await ctx.send('No matrix')
+        
     await ctx.send(embed = embed)
 
 @client.command()
