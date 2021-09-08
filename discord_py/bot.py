@@ -35,7 +35,14 @@ import json
 
 from discord_components.client import DiscordComponents
 from discord_components import *
-client = commands.Bot(command_prefix= '=')
+
+with open('discord_py/config.json') as f:
+    files =f.read()
+    d = json.loads(files)
+    token = d['token']
+    #print(d['token'])
+
+client = commands.Bot(command_prefix= d['prefix'])
 
 
 @client.event
@@ -569,6 +576,9 @@ async def stop(ctx):
     await msg.add_reaction('🔴')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
-    
+
+
+#print(token)
 client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro')
+#ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro
 #ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.e0I1pWWRE3rUZwka7C8jPayiHgA
