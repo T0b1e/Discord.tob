@@ -7,7 +7,9 @@ python version
 from asyncio.tasks import sleep
 import discord
 from discord import colour
+from discord import user
 from discord.colour import Color
+from discord.embeds import Embed
 from discord.ext import commands,tasks
 
 from discord.player import FFmpegPCMAudio
@@ -35,15 +37,15 @@ import json
 
 from discord_components.client import DiscordComponents
 from discord_components import *
-
+"""
 with open('discord_py/config.json') as f:
     files =f.read()
     d = json.loads(files)
-    token = d['token']
+    token = d['token']"""
     #print(d['token'])
 
-client = commands.Bot(command_prefix= d['prefix'])
-
+client = commands.Bot(command_prefix= '=')#d['prefix']
+os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
 @client.event
 async def on_ready(): #Event client ready
@@ -286,6 +288,57 @@ async def weather(ctx,city:str):
     embed.add_field(name='Sunset🌤 :',value=f'{str(sunset)} pm')
 
     await ctx.send(embed = embed)
+
+@client.command()
+async def covid(ctx):
+    response = requests.get('https://covid19.ddc.moph.go.th/api/Cases/today-cases-all')
+    data = json.loads(response.text)
+    text = data[0]
+    update = text['update_date']
+    embed = discord.Embed(title = f'Covid {update} 🤮' ,description = 'Covid thailand',color = discord.Color.green())
+    embed.add_field(name='New case 🦠',value= text['new_case'])
+    embed.add_field(name='Total case 🧫',value= text['total_case'])
+    embed.add_field(name='Total case excludeabroad 📜',value= text['total_case_excludeabroad'])
+    embed.add_field(name='New death ☠️',value= text['new_death'])
+    embed.add_field(name='Total death 😇',value= text['total_death'])
+    embed.add_field(name='New recovered',value= text['new_recovered'])
+    embed.add_field(name='Total recovered',value= text['total_recovered'])
+
+    await ctx.send(embed = embed)
+
+@client.command()
+async def check(ctx):
+    await account(ctx.author)
+    users = await data()
+    embed = discord.Embed(title = 'Banking',description = f'Account {ctx.author.name} balance')
+
+    final_amount = users[str(user)]['wallet']
+
+    embed.add_field(name='Wallet',value= final_amount )
+
+    await ctx.send(embed = embed)
+
+async def account(user):
+        
+    users = await data()
+
+    if str(user.id) in users:
+        return False
+    else:
+        users[str(user.id)]['wallet'] = 0
+
+    with open('C:\\Users\\asus\\Desktop\\Udemy\\Discord.tob\\discord_py\\bank.json','r') as f:
+        json.dump(users,f)
+    return True
+
+async def data():
+    with open('C:\\Users\\asus\\Desktop\\Udemy\\Discord.tob\\discord_py\\bank.json','r') as f:
+        users = json.load(f)
+
+    return users
+
+
+
 
 @client.command()
 async def attack(ctx, member:discord.Member):
