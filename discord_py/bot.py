@@ -37,6 +37,16 @@ import json
 
 from discord_components.client import DiscordComponents
 from discord_components import *
+
+
+'''
+!!! Module isn't working try 29/9
+import Maths
+import Admin
+Maths()
+Admin()
+
+'''
 """
 with open('discord_py/config.json') as f:
     files =f.read()
@@ -403,7 +413,7 @@ async def mute(ctx, member: discord.Member,*, reason=None):
     await member.add_roles(mutedRole, reason=reason)
     await ctx.send(embed=embed)
     #await ctx.send(f"Muted {member.mention} for reason {reason}")
-    await member.send(f"You were muted in the server {guild.name} for {reason}")
+    #await member.send(f"You were muted in the server {guild.name} for {reason}")
 
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
