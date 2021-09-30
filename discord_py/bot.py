@@ -47,23 +47,17 @@ Maths()
 Admin()
 
 '''
-"""
-with open('discord_py/config.json') as f:
-    files =f.read()
-    d = json.loads(files)
-    token = d['token']"""
-    #print(d['token'])
-
-with open('config.json', 'r') as c:
-    data=c.read()
+with open('config.json') as c:
+    data = c.read()
 
 obj = json.loads(data)
 key = obj['dict']
 prefix = key['prefix']
 token = key['token']
-#print(type(token))
 
-client = commands.Bot(command_prefix= str(prefix))#d['prefix']
+#print(token)
+
+client = commands.Bot(command_prefix= str(prefix))
 os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
 @client.event
@@ -86,6 +80,7 @@ async def list(ctx): #Contact list word
     "**poll**           for vote Good or Bad (No limit user)\n"
     "**spawn**          for spawn TOBI to channel\n"
     "**weather**        for check weather today\n"
+    "**covid**          for check daily covid\n"
     "**bomb**           for delete message in channel\n")
     embed.add_field(name= "Report",value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
@@ -648,4 +643,4 @@ async def stop(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
 
-client.run(str(token))
+client.run(token)
