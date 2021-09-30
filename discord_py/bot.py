@@ -625,7 +625,6 @@ async def pause(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_playing():
         voice.pause()
-        #await ctx.send("**pause**")
     else:
         await ctx.send("Currently no audio is playing.")
 
@@ -649,8 +648,4 @@ async def stop(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
 
-
-#print(token)
 client.run(str(token))
-#ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro
-#ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.e0I1pWWRE3rUZwka7C8jPayiHgA
