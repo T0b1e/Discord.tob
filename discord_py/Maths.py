@@ -3,8 +3,16 @@ from discord.ext import commands,tasks
 import math
 import numpy as np
 import os
+import json
 
-client = commands.Bot(command_prefix= '=')#d['prefix']
+with open('config.json', 'r') as c:
+    data=c.read()
+
+obj = json.loads(data)
+key = obj['dict']
+prefix = key['prefix']
+token = key['token']
+client = commands.Bot(command_prefix= prefix)#d['prefix']
 #os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
 @client.event
@@ -91,4 +99,4 @@ async def matrix(ctx,a: int,b: int):
     await ctx.send(embed = embed)
 
 
-client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro')
+client.run(str(token))

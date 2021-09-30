@@ -2,8 +2,16 @@ import discord
 from discord.ext import commands,tasks
 import time
 import os
+import json
 
-client = commands.Bot(command_prefix= '=')#d['prefix']
+with open('config.json', 'r') as c:
+    data=c.read()
+
+obj = json.loads(data)
+key = obj['dict']
+prefix = key['prefix']
+token = key['token']
+client = commands.Bot(command_prefix= str(prefix))#d['prefix']
 #os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
 @client.event
@@ -88,4 +96,4 @@ async def unmute(ctx, member: discord.Member):
     await ctx.send(f"Unmuted {member.mention}")
     await member.send(f"You were unmuted in the server {ctx.guild.name}")
 
-client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro')
+client.run(str(token))
