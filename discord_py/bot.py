@@ -54,7 +54,16 @@ with open('discord_py/config.json') as f:
     token = d['token']"""
     #print(d['token'])
 
-client = commands.Bot(command_prefix= '=')#d['prefix']
+with open('config.json', 'r') as c:
+    data=c.read()
+
+obj = json.loads(data)
+key = obj['dict']
+prefix = key['prefix']
+token = key['token']
+#print(type(token))
+
+client = commands.Bot(command_prefix= str(prefix))#d['prefix']
 os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
 @client.event
@@ -642,6 +651,6 @@ async def stop(ctx):
 
 
 #print(token)
-client.run('ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro')
+client.run(str(token))
 #ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.ufiVDV9KSiUVpLswC4O9MuMbHro
 #ODMzMjgwODM0MTYwOTUxMjk2.YHwDQA.e0I1pWWRE3rUZwka7C8jPayiHgA
