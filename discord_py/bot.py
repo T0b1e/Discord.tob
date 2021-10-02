@@ -8,6 +8,7 @@ from asyncio.tasks import sleep
 import discord
 from discord import colour
 from discord import user
+from discord import message
 from discord.colour import Color
 from discord.embeds import Embed
 from discord.ext import commands,tasks
@@ -45,7 +46,6 @@ import Maths
 import Admin
 Maths()
 Admin()
-
 '''
 with open('config.json') as c:
     data = c.read()
@@ -60,11 +60,13 @@ token = key['token']
 client = commands.Bot(command_prefix= str(prefix))
 os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
 
+#print(client.guilds)
+
 @client.event
 async def on_ready(): #Event client ready
-    channel = client.get_channel(880036878038990858) #Get channel id
-    await channel.send('TOBI is on ready, Type "=list" to start')
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('=list')) #Change status to =help
+    print("ID :" , client.user.id)
+    print(f'Running on {len(client.guilds)} server')
     print(f'{client.user.name} is online') #Print TOBI is online
     DiscordComponents(client) #Get lib name discord component
 
@@ -113,8 +115,9 @@ async def list(ctx): #Contact list word
 
 @client.command(description="Gets the bot's latency.")
 async def Network(ctx): #Network
-    print(ctx)
+    
     latency = round(client.latency * 1000, 1)
+    print(f'Network command activated by {ctx.author.name} status {latency} on server {ctx.author.guild.name}')
     await ctx.send(f"Network = {latency}ms")
 
 @client.event 
@@ -160,6 +163,7 @@ async def level_up(users, user, channel):
 
 @client.command() #userinfo
 async def userinfo(ctx, member:discord.Member):
+    print(f'Userinfo command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     roles = [role for role in member.roles]
     embed = discord.Embed(title = f"Userinfo{member.name}",color = ctx.author.color)
     embed.set_thumbnail(url=member.avatar_url)
@@ -170,15 +174,18 @@ async def userinfo(ctx, member:discord.Member):
 
 @client.command() # ping pong
 async def ping(ctx):
+    print(f'Ping command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     await ctx.send("pong")
 
 @client.command()
 async def temp(ctx):
-        CPULOARD= psutil.cpu_percent()
-        await ctx.send(f"{CPULOARD} %")
+    print(f'Temp command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    CPULOARD= psutil.cpu_percent()
+    await ctx.send(f"{CPULOARD} %")
 
 @client.command() # plus _ _
 async def plus(ctx,a: float,b: float):
+    print(f'Plus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a + b
         await ctx.send(f'Answer from {str(a)} + {str(b)} is {ans}')
@@ -187,6 +194,7 @@ async def plus(ctx,a: float,b: float):
 
 @client.command() # minus _ _
 async def minus(ctx,a: float,b: float):
+    print(f'Minus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a - b
         await ctx.send(f'Answer from {str(a)} - {str(b)} is {ans}')
@@ -195,6 +203,7 @@ async def minus(ctx,a: float,b: float):
 
 @client.command() # multiplie _ _
 async def multiplie(ctx,a: float,b: float):
+    print(f'Multiplie command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a * b
         await ctx.send(f'Answer from {str(a)} * {str(b)} is {ans}')
@@ -203,6 +212,7 @@ async def multiplie(ctx,a: float,b: float):
 
 @client.command() # multiplie _ _
 async def divide(ctx,a: float,b: float):
+    print(f'Divide command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if b == 0:
         await ctx.send('None')
     if a < 50000 and b < 50000:
@@ -213,6 +223,7 @@ async def divide(ctx,a: float,b: float):
 
 @client.command() # sqrt
 async def sqrt(ctx,a: float):
+    print(f'Sqrt command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000:
         ans = math.sqrt(a)
         await ctx.send(f'Answer from sqrt{str(a)} is {ans}')
@@ -221,6 +232,7 @@ async def sqrt(ctx,a: float):
 
 @client.command() # sqrt
 async def expo(ctx,a: int,b: int):
+    print(f'Expo command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     if  0 > a < 50000 and 0 > b < 50000:
         ans = a ** b
         await ctx.send(f'Answer from {str(a)} ^ {str(b)} is {ans}')
@@ -229,19 +241,16 @@ async def expo(ctx,a: int,b: int):
 
 @client.command() # factorial
 async def fac(ctx,a: int):
+    print(f'Fac command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     if a < 50000:
         ans = math.factorial(a)
         await ctx.send(f'Answer from factorial {str(a)} is {ans}')
     else:
         await ctx.send('To much Integer,Try less than 50,000')
   
-
-@client.command() #Q = mcΔt
-async def Q(ctx,m: float,c: float,t1: float,t2: float):
-        await ctx.send(m*c*(t2-t1))
-
 @client.command()
 async def matrix(ctx,a: int,b: int):
+    print(f'Matrix command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Random Matrix',description = 'Random quick math')
     matrix_01 = np.random.randint(1,10,size=(a,b))
     matrix_02 = np.random.randint(1,10,size=(a,b))
@@ -255,6 +264,7 @@ async def matrix(ctx,a: int,b: int):
 
 @client.command()
 async def weather(ctx,city:str):
+    print(f'Weather command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     city = city
     api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
     json_data = requests.get(api).json()
@@ -305,6 +315,7 @@ async def weather(ctx,city:str):
 
 @client.command()
 async def covid(ctx):
+    print(f'Covid command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     response = requests.get('https://covid19.ddc.moph.go.th/api/Cases/today-cases-all')
     data = json.loads(response.text)
     text = data[0]
@@ -322,6 +333,7 @@ async def covid(ctx):
 
 @client.command()
 async def check(ctx):
+    print(f'Check command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     await account(ctx.author)
     users = await data()
     embed = discord.Embed(title = 'Banking',description = f'Account {ctx.author.name} balance')
@@ -351,25 +363,9 @@ async def data():
 
     return users
 
-
-
-
-@client.command()
-async def attack(ctx, member:discord.Member):
-    
-    skill = ["mute","ban","bomb"]
-    finalskill = random.choice(skill)
-    if finalskill == "mute":
-        mute()
-        await ctx.send("muted commnad")
-    elif finalskill == "ban":
-        ban()
-        await ctx.send("ban commnad")
-    else:
-         await ctx.send("U Miss lol")
-
 @client.command() #clear message count command text
 async def bomb(ctx,Time:int):#
+    print(f'Bomb command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     x = Time
     if Time > 120:
         await ctx.send('Calm down bro Limit of bomb is 120')
@@ -384,6 +380,7 @@ async def bomb(ctx,Time:int):#
 
 @client.command() #report requested
 async def report(ctx, member:discord.Member, message,a :int):
+    print(f'Report command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     channel = client.get_channel(873029322288558150)
     em1 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.red())
     em4 = discord.Embed(title = "I got Report requested", description =f"About issue made by {member} with {message}: level of problem {a}",color = discord.Color.blue())
@@ -395,15 +392,18 @@ async def report(ctx, member:discord.Member, message,a :int):
 
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
+    print(f'Kick command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
     await member.kick(reason=reason)
 
 @client.command() #Ban
 async def ban(ctx, member :discord.Member, *,reason = "Ban because you don't follow the rules"):
+    print(f'Ban command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
     await member.ban(reason=reason)
 
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mute(ctx, member: discord.Member,*, reason=None):
+    print(f'Mute command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member}',Color= discord.Color.red())
     guild = ctx.guild
     mutedRole = discord.utils.get(guild.roles, name="Muted")
@@ -422,6 +422,7 @@ async def mute(ctx, member: discord.Member,*, reason=None):
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mutetime(ctx, member: discord.Member,time:int):
+    print(f'Mute time command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member} for {time}',Color= discord.Color.red())
     embed1 = discord.Embed(title = 'Mute command Embed !!!',description =f'We were unMute {member}',Color= discord.Color.green())
     guild = ctx.guild
@@ -452,6 +453,7 @@ async def mutetime(ctx, member: discord.Member,time:int):
 @client.command(description="Unmutes a specified user.") #Unmute
 @commands.has_permissions(manage_messages=True)
 async def unmute(ctx, member: discord.Member):
+    print(f'Unmute command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
     mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 
     await member.remove_roles(mutedRole)
@@ -460,6 +462,7 @@ async def unmute(ctx, member: discord.Member):
 
 @client.command(invoke_without_command = True) #tobiinfo
 async def tobiinfo(ctx):
+    print(f'Info command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     em = discord.Embed(title = "TOBI information.json", description = "Use '=tobiinfo'",color = ctx.author.color)
     em.add_field(name = "Info",value=
     "Build by Mr. Narongkorn kitrungrot\n"
@@ -472,12 +475,14 @@ async def tobiinfo(ctx):
 
 @client.command() #git
 async def git(ctx):
+    print(f'Git command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     em = discord.Embed(title = "Github repo", description = "Use '=git'",color = ctx.author.color)
     em.add_field(name = "Github",value="https://github.com/T0b1e/Discord.tob.git")
     await ctx.send(embed = em)
 
 @client.command() #poll
 async def poll(ctx,*,message):
+    print(f'Poll command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     em = discord.Embed(title = "Vote", description = f"{message}",color = ctx.author.color)
     em.add_field(name = "Poll",value="I vote bote of them so it will count 1 first")
     msg = await ctx.channel.send(embed=em)
@@ -488,12 +493,14 @@ async def poll(ctx,*,message):
 
 @client.command() #Vote
 async def vote(ctx, member :discord.Member):
+    print(f'Vote command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     await ctx.send(f"Recieve Vote {member}")
     time.sleep(10)
     await ctx.channel.purge(limit=2)
 
 @client.command()
 async def button(ctx):
+    print(f'Button command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     await ctx.send(
         "Test Button",
         components =[
@@ -505,6 +512,7 @@ async def button(ctx):
 
 @client.command()
 async def voting(ctx):
+    print(f'Voting command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     await ctx.send(
         f"Voting System Start",
         components =[
@@ -522,42 +530,39 @@ async def voting(ctx):
     
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
-      embed = discord.Embed(title = "Gacha", description = f"{prize}",color = ctx.author.color)
-      end = datetime.datetime.utcnow() + datetime.timedelta(seconds= mins * 60)
-      embed.add_field(name=" End time :",value= f"{end} UTC")
-      embed.set_footer(text=" Countdown {mins} minutes from now")
-      msg = await ctx.send(embed = embed)
-      await asyncio.sleep(mins*60)
+    print(f'Prize command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    embed = discord.Embed(title = "Gacha", description = f"{prize}",color = ctx.author.color)
+    end = datetime.datetime.utcnow() + datetime.timedelta(seconds= mins * 60)
+    embed.add_field(name=" End time :",value= f"{end} UTC")
+    embed.set_footer(text=" Countdown {mins} minutes from now")
+    msg = await ctx.send(embed = embed)
+    await asyncio.sleep(mins*60)
 
-      new_msg = await ctx.channel.fetch_message(msg.id)
-      user = await new_msg.reaction[0].users().flatten()
-      user.pop(user.index(client.user))
-      winner = random.choice(user)
-      await ctx.send(f"Congratulation to {winner.mention} won")
+    new_msg = await ctx.channel.fetch_message(msg.id)
+    user = await new_msg.reaction[0].users().flatten()
+    user.pop(user.index(client.user))
+    winner = random.choice(user)
+    await ctx.send(f"Congratulation to {winner.mention} won")
 
 @client.command(pass_context = True) #gacha number
 async def gacha(ctx, num1:int ,num2:int):
+    print(f'Gacha command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     if num1 < 100 and num2 <100:
         embed = discord.Embed(title = "Gacha", description = (random.randint(num1,num2)),color = ctx.author.color)
         await ctx.send(embed = embed)
     else:
         await ctx.send('To much number,Try less than 100')
 
-@client.command() #Special command
-async def gacha_group(ctx):
-    person = ["Tob","Petch","Spy","PP","John","Paul","Pooh"]
-    x = 0
-    for x in range (10):
-        lucky = random.choice(person)
-    await ctx.send(f'lucky person is {lucky}')
-
 @client.command(pass_context = True) #spawn
 async def spawn(ctx):
     if(ctx.author.voice):
         channel = ctx.message.author.voice.channel
+        
         await channel.connect()
     else:
         await ctx.send("you're not in the voice channel")
+
+    print(f'Spawn command activated by {ctx.author.name} at {channel} on server {ctx.author.guild.name}')
 
 @client.command()
 async def volume(ctx, volume: int):
@@ -583,7 +588,6 @@ async def play(ctx, url : str):
         return
         
     channel = ctx.message.author.voice.channel
-    print(channel)
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= str(channel))#Finish
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
@@ -602,19 +606,24 @@ async def play(ctx, url : str):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    print(f'Play command activated by {ctx.author.name} play {url} at {channel} on server {ctx.author.guild.name}')
 
 @client.command() #leave
 async def leave(ctx):
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)   
+    print(f'Leave command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     if voice.is_connected():
         await voice.disconnect()
     else:
         await ctx.send("The bot is not connected to a voice channel.")
 
+ 
+
 
 @client.command() #pause
 async def pause(ctx):
     embed_pause = discord.Embed(title = f'pause  song',description = 'Playing music in queue',color = ctx.author.color)
+    print(f'Pause command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     msg = await ctx.send(embed = embed_pause)
     await msg.add_reaction('🔇')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
@@ -622,25 +631,28 @@ async def pause(ctx):
         voice.pause()
     else:
         await ctx.send("Currently no audio is playing.")
+    
 
 @client.command() #resume
 async def resume(ctx):
     embed_resume = discord.Embed(title = f'Resume the song song',description = 'Playing music in queue',color = ctx.author.color)
+    print(f'Resume command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     msg = await ctx.send(embed = embed_resume)
     await msg.add_reaction('🔉')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     if voice.is_paused():
         voice.resume()
-        #await ctx.send("**resume**")
     else:
         await ctx.send("The audio is not paused.")
+    
 
 @client.command() #stop
 async def stop(ctx):
     embed_stop = discord.Embed(title = 'Stop song',description = 'Stop playing music in queue',color = ctx.author.color)
+    print(f'Stop command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     msg = await ctx.send(embed = embed_stop)
     await msg.add_reaction('🔴')
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
-
+    
 client.run(token)
