@@ -296,38 +296,6 @@ async def covid(ctx):
 
     await ctx.send(embed = embed)
 
-@client.command()
-async def check(ctx):
-    print(f'Check command activated by {ctx.author.name} on server {ctx.author.guild.name}')
-    await account(ctx.author)
-    users = await data()
-    embed = discord.Embed(title = 'Banking',description = f'Account {ctx.author.name} balance')
-
-    final_amount = users[str(user)]['wallet']
-
-    embed.add_field(name='Wallet',value= final_amount )
-
-    await ctx.send(embed = embed)
-
-async def account(user):
-        
-    users = await data()
-
-    if str(user.id) in users:
-        return False
-    else:
-        users[str(user.id)]['wallet'] = 0
-
-    with open('C:\\Users\\asus\\Desktop\\Udemy\\Discord.tob\\discord_py\\bank.json','r') as f:
-        json.dump(users,f)
-    return True
-
-async def data():
-    with open('C:\\Users\\asus\\Desktop\\Udemy\\Discord.tob\\discord_py\\bank.json','r') as f:
-        users = json.load(f)
-
-    return users
-
 @client.command() #clear message count command text
 async def bomb(ctx,Time = 10):#
     print(f'Bomb command activated by {ctx.author.name} on server {ctx.author.guild.name}')
