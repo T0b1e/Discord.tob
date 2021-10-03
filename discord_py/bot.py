@@ -55,18 +55,15 @@ key = obj['dict']
 prefix = key['prefix']
 token = key['token']
 
-#print(token)
-
 client = commands.Bot(command_prefix= str(prefix))
 os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
-
-#print(client.guilds)
 
 @client.event
 async def on_ready(): #Event client ready
     await client.change_presence(status=discord.Status.idle,activity=discord.Game('=list')) #Change status to =help
     print("ID :" , client.user.id)
     print(f'Running on {len(client.guilds)} server')
+    print(time.strftime("%a, %d %b %Y %H:%M:%S"))
     print(f'{client.user.name} is online') #Print TOBI is online
     DiscordComponents(client) #Get lib name discord component
 
@@ -129,38 +126,7 @@ async def on_member_join(member): # join
 @client.event
 async def on_member_remove(member): # remove
     print(f'{member} has removed the server.')
-
-client.event
-async def on_message(message):
-    with open('users.json','r') as f:
-        users = json.load(f)
-
-    await update_data(users, message.author)
-    await add_experience(users,  message.author, 5)
-    await level_up(users,  message.author, message.channel)
-
-    with open('users.json','w') as f:
-        json.dump(users, f)
-
-async def update_data(users, user):
-    if not user.id in users:
-        users[user.id] = {}
-        users[user.id]["experience"] = 0
-        users[user.id]["level"] = 1
-
-async def add_experience(users, user, exp):
-        users[user.id]["experience"] += exp
-
-async def level_up(users, user, channel):
-        experience = users[user.id]["experience"]
-        level_start = users[user.id]['level']
-        level_End = int(experience ** 1/4)
-
-        if level_start < level_End:
-            await client.send_message(channel, '{} has leveled up to {} '.format(user.mention,level_End))
-            await client.send_message('Congratulation Mr.{user.mention}')
-            users[user.id]["level"] = level_End
-
+    
 @client.command() #userinfo
 async def userinfo(ctx, member:discord.Member):
     print(f'Userinfo command activated by {ctx.author.name} on server {ctx.author.guild.name}')
@@ -184,7 +150,7 @@ async def temp(ctx):
     await ctx.send(f"{CPULOARD} %")
 
 @client.command() # plus _ _
-async def plus(ctx,a: float,b: float):
+async def plus(ctx,a : float ,b = 0):
     print(f'Plus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a + b
@@ -193,7 +159,7 @@ async def plus(ctx,a: float,b: float):
         await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # minus _ _
-async def minus(ctx,a: float,b: float):
+async def minus(ctx,a: float,b = 0):
     print(f'Minus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a - b
@@ -202,7 +168,7 @@ async def minus(ctx,a: float,b: float):
         await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # multiplie _ _
-async def multiplie(ctx,a: float,b: float):
+async def multiplie(ctx,a: float,b = 1):
     print(f'Multiplie command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a * b
@@ -211,7 +177,7 @@ async def multiplie(ctx,a: float,b: float):
         await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # multiplie _ _
-async def divide(ctx,a: float,b: float):
+async def divide(ctx,a: float,b = 1):
     print(f'Divide command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
     if b == 0:
         await ctx.send('None')
@@ -231,7 +197,7 @@ async def sqrt(ctx,a: float):
         await ctx.send('To much Integer,Try less than 50,000')
 
 @client.command() # sqrt
-async def expo(ctx,a: int,b: int):
+async def expo(ctx,a: int,b = 1):
     print(f'Expo command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     if  0 > a < 50000 and 0 > b < 50000:
         ans = a ** b
@@ -249,7 +215,7 @@ async def fac(ctx,a: int):
         await ctx.send('To much Integer,Try less than 50,000')
   
 @client.command()
-async def matrix(ctx,a: int,b: int):
+async def matrix(ctx,a: int,b = 3):
     print(f'Matrix command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Random Matrix',description = 'Random quick math')
     matrix_01 = np.random.randint(1,10,size=(a,b))
