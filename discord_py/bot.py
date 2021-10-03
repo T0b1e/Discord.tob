@@ -24,7 +24,6 @@ from datetime import datetime
 
 #import datetime #set time
 import time #Class,Count
-import calendar #Class
 import requests
 import random #gacha prize
 import math
@@ -33,7 +32,6 @@ import numpy as np
 from numpy import random
 from numpy import *
 
-import webbrowser
 import json
 
 from discord_components.client import DiscordComponents
@@ -65,6 +63,7 @@ async def on_ready(): #Event client ready
     print(f'Running on {len(client.guilds)} server')
     print(time.strftime("%a, %d %b %Y %H:%M:%S"))
     print(f'{client.user.name} is online') #Print TOBI is online
+    print('='*50)
     DiscordComponents(client) #Get lib name discord component
 
 @client.command() #list commands
@@ -229,7 +228,7 @@ async def matrix(ctx,a: int,b = 3):
     await ctx.send(embed = embed)
 
 @client.command()
-async def weather(ctx,city:str):
+async def weather(ctx,city = 'Songkhla'):
     print(f'Weather command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     city = city
     api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
@@ -330,7 +329,7 @@ async def data():
     return users
 
 @client.command() #clear message count command text
-async def bomb(ctx,Time:int):#
+async def bomb(ctx,Time = 10):#
     print(f'Bomb command activated by {ctx.author.name} on server {ctx.author.guild.name}')
     x = Time
     if Time > 120:
@@ -541,19 +540,21 @@ async def volume(ctx, volume: int):
     await msg.add_reaction('🔊')
 
 @client.command() #play
-async def play(ctx, url : str):
-    embed_play = discord.Embed(title = f'Play {url}',description = 'Playing music in queue',color = ctx.author.color)
-    msg = await ctx.send(embed = embed_play)
+async def play(ctx, url):
+    channel = ctx.message.author.voice.channel
+    embed_play = discord.Embed(title = f'Play {url}',description = 'Playing music in queue',color = ctx.author.color) 
+    msg = await ctx.send(embed = embed_play) 
     await msg.add_reaction('🎶')
+    print(f'Play command activated by {ctx.author.name} play {url} at {channel} on server {ctx.author.guild.name}')
     song_there = os.path.isfile("song.mp3")
+
     try:
         if song_there:
             os.remove("song.mp3")
     except PermissionError:
         await ctx.send("Wait for the current playing music to end or use the 'stop' command")
         return
-        
-    channel = ctx.message.author.voice.channel
+    
     voiceChannel = discord.utils.get(ctx.guild.voice_channels, name= str(channel))#Finish
     await voiceChannel.connect()
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
@@ -572,8 +573,7 @@ async def play(ctx, url : str):
         if file.endswith(".mp3"):
             os.rename(file, "song.mp3")
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    print(f'Play command activated by {ctx.author.name} play {url} at {channel} on server {ctx.author.guild.name}')
-
+   
 @client.command() #leave
 async def leave(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)   
@@ -582,9 +582,6 @@ async def leave(ctx):
         await voice.disconnect()
     else:
         await ctx.send("The bot is not connected to a voice channel.")
-
- 
-
 
 @client.command() #pause
 async def pause(ctx):
@@ -598,7 +595,6 @@ async def pause(ctx):
     else:
         await ctx.send("Currently no audio is playing.")
     
-
 @client.command() #resume
 async def resume(ctx):
     embed_resume = discord.Embed(title = f'Resume the song song',description = 'Playing music in queue',color = ctx.author.color)
@@ -611,7 +607,6 @@ async def resume(ctx):
     else:
         await ctx.send("The audio is not paused.")
     
-
 @client.command() #stop
 async def stop(ctx):
     embed_stop = discord.Embed(title = 'Stop song',description = 'Stop playing music in queue',color = ctx.author.color)
