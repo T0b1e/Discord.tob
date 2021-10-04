@@ -139,18 +139,18 @@ async def userinfo(ctx, member:discord.Member):
 
 @client.command() # ping pong
 async def ping(ctx):
-    print(f'Ping command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Ping command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     await ctx.send("pong")
 
 @client.command()
 async def temp(ctx):
-    print(f'Temp command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Temp command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     CPULOARD= psutil.cpu_percent()
     await ctx.send(f"{CPULOARD} %")
 
 @client.command() # plus _ _
 async def plus(ctx,a : float ,b = 0):
-    print(f'Plus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Plus command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a + b
         await ctx.send(f'Answer from {str(a)} + {str(b)} is {ans}')
@@ -159,7 +159,7 @@ async def plus(ctx,a : float ,b = 0):
 
 @client.command() # minus _ _
 async def minus(ctx,a: float,b = 0):
-    print(f'Minus command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Minus command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a - b
         await ctx.send(f'Answer from {str(a)} - {str(b)} is {ans}')
@@ -168,7 +168,7 @@ async def minus(ctx,a: float,b = 0):
 
 @client.command() # multiplie _ _
 async def multiplie(ctx,a: float,b = 1):
-    print(f'Multiplie command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Multiplie command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     if a < 50000 and b < 50000:
         ans = a * b
         await ctx.send(f'Answer from {str(a)} * {str(b)} is {ans}')
@@ -177,7 +177,7 @@ async def multiplie(ctx,a: float,b = 1):
 
 @client.command() # multiplie _ _
 async def divide(ctx,a: float,b = 1):
-    print(f'Divide command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Divide command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     if b == 0:
         await ctx.send('None')
     if a < 50000 and b < 50000:
@@ -188,7 +188,7 @@ async def divide(ctx,a: float,b = 1):
 
 @client.command() # sqrt
 async def sqrt(ctx,a: float):
-    print(f'Sqrt command activated by {ctx.author.name} on server {ctx.author.guild.name}') 
+    print(f'Sqrt command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') 
     if a < 50000:
         ans = math.sqrt(a)
         await ctx.send(f'Answer from sqrt{str(a)} is {ans}')
@@ -197,7 +197,7 @@ async def sqrt(ctx,a: float):
 
 @client.command() # sqrt
 async def expo(ctx,a: int,b = 1):
-    print(f'Expo command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Expo command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     if  0 > a < 50000 and 0 > b < 50000:
         ans = a ** b
         await ctx.send(f'Answer from {str(a)} ^ {str(b)} is {ans}')
@@ -206,7 +206,7 @@ async def expo(ctx,a: int,b = 1):
 
 @client.command() # factorial
 async def fac(ctx,a: int):
-    print(f'Fac command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Fac command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     if a < 50000:
         ans = math.factorial(a)
         await ctx.send(f'Answer from factorial {str(a)} is {ans}')
@@ -229,7 +229,7 @@ async def matrix(ctx,a: int,b = 3):
 
 @client.command()
 async def weather(ctx,city = 'Songkhla'):
-    print(f'Weather command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Weather command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     city = city
     api = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=06c921750b9a82d8f5d1294e1586276f"
     json_data = requests.get(api).json()
@@ -280,7 +280,7 @@ async def weather(ctx,city = 'Songkhla'):
 
 @client.command()
 async def covid(ctx):
-    print(f'Covid command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Covid command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     response = requests.get('https://covid19.ddc.moph.go.th/api/Cases/today-cases-all')
     data = json.loads(response.text)
     text = data[0]
@@ -298,7 +298,7 @@ async def covid(ctx):
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time = 10):#
-    print(f'Bomb command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Bomb command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     x = Time
     if Time > 120:
         await ctx.send('Calm down bro Limit of bomb is 120')
@@ -313,7 +313,7 @@ async def bomb(ctx,Time = 10):#
 
 @client.command() #report requested
 async def report(ctx, member:discord.Member, message,a :int):
-    print(f'Report command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Report command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     channel = client.get_channel(873029322288558150)
     em1 = discord.Embed(title = "Report requested", description =f"Admin will discuss about issue by {member} with {message}: level of problem {a}",color = discord.Color.red())
     em4 = discord.Embed(title = "I got Report requested", description =f"About issue made by {member} with {message}: level of problem {a}",color = discord.Color.blue())
@@ -325,18 +325,18 @@ async def report(ctx, member:discord.Member, message,a :int):
 
 @client.command() #Kick
 async def kick(ctx, member :discord.Member, *,reason = "Kick because you don't follow the rules"):
-    print(f'Kick command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
+    print(f'Kick command activated by {ctx.author.name} to {member} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     await member.kick(reason=reason)
 
 @client.command() #Ban
 async def ban(ctx, member :discord.Member, *,reason = "Ban because you don't follow the rules"):
-    print(f'Ban command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
+    print(f'Ban command activated by {ctx.author.name} to {member} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     await member.ban(reason=reason)
 
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mute(ctx, member: discord.Member,*, reason=None):
-    print(f'Mute command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
+    print(f'Mute command activated by {ctx.author.name} to {member} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member}',Color= discord.Color.red())
     guild = ctx.guild
     mutedRole = discord.utils.get(guild.roles, name="Muted")
@@ -355,7 +355,7 @@ async def mute(ctx, member: discord.Member,*, reason=None):
 @client.command(description="Mutes the specified user.") #Mute
 @commands.has_permissions(manage_messages=True)
 async def mutetime(ctx, member: discord.Member,time:int):
-    print(f'Mute time command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
+    print(f'Mute time command activated by {ctx.author.name} to {member} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     embed = discord.Embed(title = 'Mute command Embed !!!',description =f'We were Mute {member} for {time}',Color= discord.Color.red())
     embed1 = discord.Embed(title = 'Mute command Embed !!!',description =f'We were unMute {member}',Color= discord.Color.green())
     guild = ctx.guild
@@ -386,7 +386,7 @@ async def mutetime(ctx, member: discord.Member,time:int):
 @client.command(description="Unmutes a specified user.") #Unmute
 @commands.has_permissions(manage_messages=True)
 async def unmute(ctx, member: discord.Member):
-    print(f'Unmute command activated by {ctx.author.name} to {member} on server {ctx.author.guild.name}')
+    print(f'Unmute command activated by {ctx.author.name} to {member} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     mutedRole = discord.utils.get(ctx.guild.roles, name="Muted")
 
     await member.remove_roles(mutedRole)
@@ -395,11 +395,11 @@ async def unmute(ctx, member: discord.Member):
 
 @client.command(invoke_without_command = True) #tobiinfo
 async def tobiinfo(ctx):
-    print(f'Info command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Info command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     em = discord.Embed(title = "TOBI information.json", description = "Use '=tobiinfo'",color = ctx.author.color)
     em.add_field(name = "Info",value=
     "Build by Mr. Narongkorn kitrungrot\n"
-    "Version 0.8.1 (25/8/2021)\n"
+    "Version 0.10.1 (3/10/2021)\n"
     "Born 12/7/2020\n"
     "Discordbot.js © TOB · Narongkorn,Hosted by TOB Raspberrypi, distributed under the PSUWIT license")
     em.add_field(name='Supporter',value='https://ko-fi.com/narongkorn')
@@ -408,14 +408,14 @@ async def tobiinfo(ctx):
 
 @client.command() #git
 async def git(ctx):
-    print(f'Git command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Git command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     em = discord.Embed(title = "Github repo", description = "Use '=git'",color = ctx.author.color)
     em.add_field(name = "Github",value="https://github.com/T0b1e/Discord.tob.git")
     await ctx.send(embed = em)
 
 @client.command() #poll
 async def poll(ctx,*,message):
-    print(f'Poll command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Poll command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     em = discord.Embed(title = "Vote", description = f"{message}",color = ctx.author.color)
     em.add_field(name = "Poll",value="I vote bote of them so it will count 1 first")
     msg = await ctx.channel.send(embed=em)
@@ -426,14 +426,14 @@ async def poll(ctx,*,message):
 
 @client.command() #Vote
 async def vote(ctx, member :discord.Member):
-    print(f'Vote command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Vote command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     await ctx.send(f"Recieve Vote {member}")
     time.sleep(10)
     await ctx.channel.purge(limit=2)
 
 @client.command()
 async def button(ctx):
-    print(f'Button command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Button command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     await ctx.send(
         "Test Button",
         components =[
@@ -445,7 +445,7 @@ async def button(ctx):
 
 @client.command()
 async def voting(ctx):
-    print(f'Voting command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Voting command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     await ctx.send(
         f"Voting System Start",
         components =[
@@ -463,7 +463,7 @@ async def voting(ctx):
     
 @client.command() #gacha+time
 async def prize(ctx, mins :int, *,prize :str):
-    print(f'Prize command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Prize command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     embed = discord.Embed(title = "Gacha", description = f"{prize}",color = ctx.author.color)
     end = datetime.datetime.utcnow() + datetime.timedelta(seconds= mins * 60)
     embed.add_field(name=" End time :",value= f"{end} UTC")
@@ -479,7 +479,7 @@ async def prize(ctx, mins :int, *,prize :str):
 
 @client.command(pass_context = True) #gacha number
 async def gacha(ctx, num1:int ,num2:int):
-    print(f'Gacha command activated by {ctx.author.name} on server {ctx.author.guild.name}')
+    print(f'Gacha command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
     if num1 < 100 and num2 <100:
         embed = discord.Embed(title = "Gacha", description = (random.randint(num1,num2)),color = ctx.author.color)
         await ctx.send(embed = embed)
