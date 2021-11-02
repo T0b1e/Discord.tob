@@ -122,6 +122,16 @@ async def Network(ctx): #Network
     await ctx.send(f"Network = {latency}ms")
 
 
+@client.command()
+async def deploy(ctx):
+    embed = discord.Embed(title="Status 0.11.1 (2/11/2021)", description="last update 2/11/2021",colour=discord.Color.blue())
+    embed.add_field(name="Add", value="Fix some bug math functions")
+    embed.add_field(name="Add", value="Add Wikipedia ,weather , covid functions")
+    embed.add_field(name="Source code", value="https://github.com/T0b1e/Discord.tob")
+
+    await ctx.send(embed=embed)
+
+
 @client.event 
 async def on_member_join(member): # join
     role = discord.utils.get(member.server.roles,name = 'USERS') 
@@ -484,7 +494,7 @@ async def tobiinfo(ctx):
     em = discord.Embed(title = "TOBI information.json", description = "Use '=tobiinfo'",color = ctx.author.color)
     em.add_field(name = "Info",value=
     "Build by Mr. Narongkorn kitrungrot\n"
-    "Version 0.10.1 (3/10/2021)\n"
+    "Version 0.11.1 (2/11/2021)\n"
     "Born 12/7/2020\n"
     "Discordbot.py © TOB · Narongkorn,Hosted by TOB Raspberrypi, distributed under the PSUWIT license")
     em.add_field(name='Github', value='https://github.com/T0b1e/Discord.tob.git')
