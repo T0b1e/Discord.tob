@@ -3,6 +3,8 @@ Discord.python
 Created from Mr.Narongkorn Kitrungrot, distributed under the PSUWIT license, Host by my Raspberry Pi 4.
 Created since 3/April/2021
 
+## For Use prefix = "=" see command use "=list"
+
 # Specific command
 1. Normal command
     * Network
@@ -41,3 +43,5 @@ Created since 3/April/2021
     * temp 
     * tobiinfo
     * git
+
+### For spawn my bot pls click https://discord.com/oauth2/authorize?client_id=833280834160951296&scope=bot No virus
