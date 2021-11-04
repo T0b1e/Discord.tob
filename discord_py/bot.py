@@ -47,7 +47,7 @@ import Admin
 Maths()
 Admin()
 '''
-with open('discord_py/config.json') as c:
+with open('config.json') as c:
     data = c.read()
 
 obj = json.loads(data)
@@ -84,6 +84,7 @@ async def list(ctx):  # Contact list word
     "**spawn**          for spawn TOBI to channel\n"
     "**weather**        for check weather today\n"
     "**covid**          for check daily covid\n"
+    "**covid_stat**     for Covid stat in duration by Graph and total\n"
     "**bomb**           for delete message in channel\n")
     embed.add_field(name="Report", value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
@@ -390,7 +391,7 @@ async def covid_stat(ctx, key=None):
         date.append(data[x]["txn_date"])
         case.append(data[x]['new_case'])
 
-    embed = discord.Embed(title= f'Covid-19 In duration {date[0]} to {date[len(data) - 1]}')
+    embed = discord.Embed(title= f'Covid-19 In duration {date[0]} to {date[len(data) - 1]}',color = discord.Color.blue())
 
     if key == None:
         plt.title(f'Covid-19 during {date[0]} to {date[len(data) - 1]}')
