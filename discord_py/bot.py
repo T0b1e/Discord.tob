@@ -31,6 +31,7 @@ import math
 import numpy as np
 from numpy import random
 from numpy import *
+import matplotlib.pyplot as plt
 
 import json
 import wikipedia
@@ -46,7 +47,7 @@ import Admin
 Maths()
 Admin()
 '''
-with open('config.json') as c:
+with open('discord_py/config.json') as c:
     data = c.read()
 
 obj = json.loads(data)
@@ -377,7 +378,42 @@ async def covid(ctx):
 
     await ctx.send(embed = embed)
 
+@client.command()
+async def covid_stat(ctx, key=None):
+    
+    response = requests.get("https://covid19.ddc.moph.go.th/api/Cases/timeline-cases-all")
+    data = response.json()
 
+    case = []
+    date = []
+    for x in range(len(data)):
+        date.append(data[x]["txn_date"])
+        case.append(data[x]['new_case'])
+
+    embed = discord.Embed(title= f'Covid-19 In duration {date[0]} to {date[len(data) - 1]}')
+
+    if key == None:
+        plt.title(f'Covid-19 during {date[0]} to {date[len(data) - 1]}')
+        fig = plt.figure()
+        plt.plot(date,case)
+        fig.savefig('covid.png', dpi = 100, facecolor = 'white')
+
+        file = discord.File("covid.png", filename="covid.png")
+        embed.set_image(url="attachment://covid.png")
+        embed.add_field(name="Total case", value=data[len(data) - 1]['total_case'])
+        embed.add_field(name="Total case excludeabroad", value=data[len(data) - 1]['total_case_excludeabroad'])
+        embed.add_field(name="Total death", value=data[len(data) - 1]['total_death'])
+        embed.add_field(name="Total recovered", value=data[len(data) - 1]['total_recovered'])
+        embed.set_footer(text=f"Update Information {data[len(data) - 1]['update_date']}")
+
+        #await ctx.send(file=discord.File('covid.png'))
+        await ctx.send(file=file, embed=embed)
+    
+    else:
+
+        await ctx.send('Not in a range')
+        
+        
 @client.command()
 async def code(ctx):
     r = requests.get('https://www.codewars.com/api/v1/users/{user}')
