@@ -44,4 +44,6 @@ Created since 3/April/2021
     * tobiinfo
     * git
 
+##Example usage
+[covid-stat command]()
 ### For spawn my bot pls click https://discord.com/oauth2/authorize?client_id=833280834160951296&scope=bot No virus
