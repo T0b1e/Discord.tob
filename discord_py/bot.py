@@ -95,8 +95,7 @@ async def list(ctx):  # Contact list word
     "**divide __**      for divide the numbers\n"
     "**sqrt __**        for Square root the numbers\n"
     "**expo __**        for exponent the numbers\n"
-    "**fac __**        for factorial the numbers\n"
-    "**Q = mcΔt**       for calculate the numbers\n")
+    "**fac __**        for factorial the numbers\n")
     embed.add_field(name="Audio", value=
     "**play 'url'**     for play song\n"
     "**stop**           for stop song\n"
@@ -413,13 +412,6 @@ async def covid_stat(ctx, key=None):
     else:
 
         await ctx.send('Not in a range')
-        
-        
-@client.command()
-async def code(ctx):
-    r = requests.get('https://www.codewars.com/api/v1/users/{user}')
-    print(r.text)
-
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time = 10):#
