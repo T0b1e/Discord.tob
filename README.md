@@ -16,9 +16,14 @@ Created since 3/April/2021
     * bomb
 2. Special command fomr other module
     * search
+    - wikipedia api
     * weather
+    - openweathermap api
     * covid
     * covid_stat
+    - covid data.go.th api
+    * lottery
+    - web scraping sanook.com
 3. Math command
     * plus
     * minus
