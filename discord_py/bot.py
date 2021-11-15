@@ -39,6 +39,7 @@ import wikipedia
 from discord_components.client import DiscordComponents
 from discord_components import *
 
+from lottery import *
 
 '''
 !!! Module isn't working try 29/9
@@ -85,6 +86,7 @@ async def list(ctx):  # Contact list word
     "**weather**        for check weather today\n"
     "**covid**          for check daily covid\n"
     "**covid_stat**     for Covid stat in duration by Graph and total\n"
+    "**lotetry**        for lotetry today\n"
     "**bomb**           for delete message in channel\n")
     embed.add_field(name="Report", value=
     "**report**         for report User by Issue to Admin to discuss and Vote\n")
@@ -412,6 +414,56 @@ async def covid_stat(ctx, key=None):
     else:
 
         await ctx.send('Not in a range')
+
+
+@client.command()
+async def lottery(ctx, key=None):
+    
+    embed = discord.Embed(title='Lottery this month', description= 'Goog luck', colour=discord.Color.orange())
+    if key == None:
+        embed.add_field(name='รางวัลที่ 1', value=first_reward()['first_reward'])
+        embed.add_field(name='เลขหน้า 3 ตัว', value=first_reward()['front_three'])
+        embed.add_field(name='เลขท้าย 3 ตัว', value=first_reward()['last_three'])
+        embed.add_field(name='เลขท้าย 2 ตัว', value=first_reward()['last_two'])
+        embed.add_field(name='รางวัลที่ 1', value=first_reward()['first_reward'])
+        embed.add_field(name='รางวัลที่ 2', value=second_reward())
+        embed.add_field(name='รางวัลที่ 3', value=third_reward())
+        embed.add_field(name='รางวัลที่ 4', value=fourth_reward())
+        embed.add_field(name='รางวัลที่ 5', value=fifth_reward())
+    else:
+        if key == first_reward()['first_reward']:
+            embed.add_field(name='CONGRATULATION YOU GET FIRST REWARD MAN', value=key)
+            embed.add_field(name='REWARD', value='6,000,000 Baht')
+        elif key in first_reward()['front_three']:
+            embed.add_field(name='CONGRATULATION YOU GET FIRST FRONT THREE ', value=key)
+            embed.add_field(name='REWARD', value='4,000 Baht')
+        elif key in first_reward()['last_three']:
+            embed.add_field(name='CONGRATULATION YOU GET FIRST REWARD', value=key)
+            embed.add_field(name='REWARD', value='4,000 Baht')
+        elif key in first_reward()['last_two']:
+            embed.add_field(name='CONGRATULATION YOU GET FIRST REWARD', value=key)
+            embed.add_field(name='REWARD', value='2,000 Baht')
+        elif key in first_reward()['close_reward']:
+            embed.add_field(name='CONGRATULATION YOU GET CLOSE FIRST REWARD', value=key)
+            embed.add_field(name='REWARD', value='2,000 Baht')
+        elif key in second_reward():
+            embed.add_field(name='CONGRATULATION YOU GET SECOND REWARD', value=key)
+            embed.add_field(name='REWARD', value='200,000 Baht')
+        elif key in third_reward():
+            embed.add_field(name='CONGRATULATION YOU GET THIRD REWARD', value=key)
+            embed.add_field(name='REWARD', value='80,000 Baht')
+        elif key in fourth_reward():
+            embed.add_field(name='CONGRATULATION YOU GET FOURTH REWARD', value=key)
+            embed.add_field(name='REWARD', value='40,000 Baht')
+        elif key in fifth_reward():
+            embed.add_field(name='CONGRATULATION YOU GET FIFTH REWARD', value=key)
+            embed.add_field(name='REWARD', value='20,000 Baht')
+        else:
+            embed.add_field(name='Sorry you are not lucky today try next', value=f'Check lottery https://news.sanook.com/lotto/')
+
+    await ctx.send(embed = embed)
+
+
 
 @client.command() #clear message count command text
 async def bomb(ctx,Time = 10):#
