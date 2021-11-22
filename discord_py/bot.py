@@ -134,7 +134,6 @@ async def deploy(ctx):
 
     await ctx.send(embed=embed)
 
-
 @client.event 
 async def on_member_join(member): # join
     role = discord.utils.get(member.server.roles,name = 'USERS') 
