@@ -5,7 +5,6 @@ python version
 """
 
 import discord
-from collections import Counter
 from discord.ext import commands
 
 with open('SECRET.txt') as f:
