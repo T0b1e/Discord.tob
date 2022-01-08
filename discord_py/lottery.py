@@ -12,7 +12,8 @@ if int(day) < 16:
 else:
     date = '16'
     
-timenow = date + month + str(int(year) + 543)
+# timenow = date + month + str(int(year) + 543)
+timenow = 30122564
 
 page = requests.get(f"https://news.sanook.com/lotto/check//{timenow}")  #https://news.sanook.com/lotto/check/01112564/
 soup = BeautifulSoup(page.content, 'html.parser')
