@@ -48,17 +48,15 @@ import Admin
 Maths()
 Admin()
 '''
-with open('config.json') as c:
-    data = c.read()
 
-obj = json.loads(data)
-key = obj['dict']
-prefix = key['prefix']
-token = key['token']
+try:
+    with open('discord_py/SECRET.txt') as f:
+        info = f.readlines()
+except FileNotFoundError:
+    with open('SECRET.txt') as f:
+        info = f.readlines()
 
-client = commands.Bot(command_prefix= str(prefix))
-os.chdir('C:/Users/asus/Desktop/Udemy/Discord.tob/discord_py')
-
+client = commands.Bot(command_prefix="=")
 
 @client.event
 async def on_ready():  # Event client ready
@@ -363,12 +361,14 @@ async def find_class(ctx):
 
 @client.command()
 async def covid(ctx):
-    print(f'Covid command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}')
+    print(f'Covid command activated by {ctx.author.name} on channel {ctx.channel.name} server {ctx.author.guild.name}') # TODO
     response = requests.get('https://covid19.ddc.moph.go.th/api/Cases/today-cases-all')
+
     data = json.loads(response.text)
+
     text = data[0]
     update = text['update_date']
-    embed = discord.Embed(title = f'Covid {update} 🤮' ,description = 'Covid thailand',color = discord.Color.green())
+    embed = discord.Embed(title = f'Covid-19 🤮' ,description = f'Update {update}',color = discord.Color.green())
     embed.add_field(name='New case 🦠',value= text['new_case'])
     embed.add_field(name='Total case 🧫',value= text['total_case'])
     embed.add_field(name='Total case excludeabroad 📜',value= text['total_case_excludeabroad'])
@@ -425,10 +425,10 @@ async def lottery(ctx, key=None):
         embed.add_field(name='เลขท้าย 3 ตัว', value=first_reward()['last_three'])
         embed.add_field(name='เลขท้าย 2 ตัว', value=first_reward()['last_two'])
         embed.add_field(name='รางวัลที่ 1', value=first_reward()['first_reward'])
-        embed.add_field(name='รางวัลที่ 2', value=second_reward())
-        embed.add_field(name='รางวัลที่ 3', value=third_reward())
-        embed.add_field(name='รางวัลที่ 4', value=fourth_reward())
-        embed.add_field(name='รางวัลที่ 5', value=fifth_reward())
+        embed.add_field(name='รางวัลที่ 2', value=second_reward()[0])
+        embed.add_field(name='รางวัลที่ 3', value=third_reward()[0])
+        embed.add_field(name='รางวัลที่ 4', value=fourth_reward()[0])
+        embed.add_field(name='รางวัลที่ 5', value=fifth_reward()[0])
     else:
         if key == first_reward()['first_reward']:
             embed.add_field(name='CONGRATULATION YOU GET FIRST REWARD MAN', value=key)
@@ -775,4 +775,4 @@ async def stop(ctx):
     voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
     voice.stop()
     
-client.run(token)
+client.run(int(info[1], 2).to_bytes((int(info[1], 2).bit_length() + 7) // 8, 'big').decode())
